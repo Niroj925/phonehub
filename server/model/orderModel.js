@@ -9,10 +9,15 @@ const orderItemSchema = mongoose.Schema({
 
 const orderSchema =mongoose.Schema({
     user: { type:mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
+    customerName:{type:String,required:true},
     customerContact:{type:Number,required:true},
     orderItems: orderItemSchema,
     shippingAddress: {
       address: { type: String, required: true },
+      location:{
+       lon:{type:Number,required:false},
+       lat:{type:Number,required:false},
+      },
       city: { type: String, required: true },
       postalCode: { type: String, required: true },
       country: { type: String, required: false }

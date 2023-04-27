@@ -6,7 +6,7 @@ import userRoute from './route/userRoute.js';
 import productRoute from './route/productRoute.js';
 import orderRoute from './route/orderRoute.js';
 // import orderItemRoute from './route/orderItemRoute.js';
-// import reviewRoute from  './route/reviewRoute.js';
+import reviewRoute from  './route/reviewRoute.js';
 import "dotenv/config"
 
 
@@ -23,7 +23,7 @@ app.use('/api/user',userRoute);
 app.use('/api/product',productRoute);
 app.use('/api/order',orderRoute);
 // app.use('/api/orderitem',orderItemRoute);
-// app.use('/api/review',reviewRoute);
+app.use('/api/review',reviewRoute);
 
 
 app.get('/api',async(req,res)=>{
