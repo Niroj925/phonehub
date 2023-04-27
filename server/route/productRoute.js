@@ -11,7 +11,7 @@ router.post('/addproduct',productController.addProduct);
 // router.put('/update',productController.updateProduct);
 router.put('/updateprice',productController.updateProductPrice);
 router.put('/addfeature',productController.addFeatures);
-// router.post('/remove',productController.removeProduct);
+router.delete('/remove',productController.deleteProduct);
 router.get('/getproduct',productController.getAllProduct);
 router.get('/getfilterproduct',productController.getProductsWithFilters);
 

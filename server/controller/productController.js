@@ -5,7 +5,7 @@ import "dotenv/config";
 export default class ProductController{
     async addProduct(req,res){
           try {
-            const response = await productModel.create({...req.filter});
+            const response = await productModel.create({...req.body});
             if (response === null) {
               return res.json([]);
             } else {
@@ -60,7 +60,7 @@ export default class ProductController{
   }
 
   async addFeatures(req,res){
-    const {productId,newFeature}=req.filter;
+    const {productId,newFeature}=req.body;
 
     try{
     const product = await productModel.findById(productId);
@@ -99,7 +99,7 @@ export default class ProductController{
   
 
     async updateProductPrice (req,res){
-      const {productId, newPrice}=req.filter
+      const {productId, newPrice}=req.body
     try {
       const product = await productModel.findByIdAndUpdate(
         productId,
@@ -115,7 +115,7 @@ export default class ProductController{
   };
 
   async updateCountStock(req,res){
-    const {productId, newCountStock}=req.filter
+    const {productId, newCountStock}=req.body
   try {
     const product = await productModel.findByIdAndUpdate(
       productId,
@@ -129,6 +129,19 @@ export default class ProductController{
     throw new Error('Error updating product count');
   }
 };
+
+async  deleteProduct(req, res) {
+  try {
+    const id = req.body.productId;
+    const deletedProduct = await productModel.findByIdAndDelete(id);
+    if (!deletedProduct) {
+       res.status(404).json({ message: "Product not found" });
+    }
+     res.status(200).json({ message: "Product deleted successfully" });
+  } catch (err) {
+     res.status(500).json({ message: "Internal server error" });
+  }
+}
 
   }
 
