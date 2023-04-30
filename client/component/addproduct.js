@@ -5,9 +5,8 @@ import styles from '../styles/AddProduct.module.css'
 import axios from 'axios';
 import api from '../pages/api/api.js'
 import { useRouter } from 'next/router';
-// import { Direction } from 'react-toastify/dist/utils';
 
-const AddProductForm = ({isOpen}) => {
+const AddProductForm = (props) => {
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
   const [description, setDescription] = useState('');
@@ -19,8 +18,6 @@ const AddProductForm = ({isOpen}) => {
   const [featureName,setFeatureName]=useState('');
   const [featureValue,setFeatureValue]=useState('');
 
-  console.log(isOpen);
-
   const router=useRouter();
   
     const { userid } = router.query
@@ -29,6 +26,8 @@ const AddProductForm = ({isOpen}) => {
   const handleAddFeature = () => {
     setFeatures([...features, { name: featureName, value:featureValue }]);
     console.log(features);
+    setFeatureName('');
+    setFeatureValue('');
   };
 
 
@@ -46,44 +45,10 @@ const AddProductForm = ({isOpen}) => {
     setImage(e.target.files[0]);
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-    
-  //   const productData={
-  //       "name": name,
-  //       "brand": brand,
-  //       "description": description,
-  //       "category": category,
-  //       "price":price ,
-  //       "countInStock":countInStock,
-  //       "image":image,
-  //       "features": features,
-  //       "user":userid
-  //   }
-
-  //   try {
-  //       console.log(productData);
-  //     const response = await api.post('/product/addproduct', productData, {
-  //           headers: {
-  //               token: JSON.parse(localStorage.getItem("token")),
-  //             },  
-  //     });
-  //     console.log(response.data);
-  //     // TODO: handle success response
-  //     if(response.data){
-  //       setFeatures([]);
-  //       // router.push(`/mystore/profile?userid=${userid}`); 
-  //       // onClose();
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     // TODO: handle error response
-  //   }
-  // };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+   console.log(props.isOpen)
+  //  console.log(props.onClose)
     const formData = new FormData();
     formData.append('name', name);
     formData.append('brand', brand);
@@ -107,6 +72,12 @@ const AddProductForm = ({isOpen}) => {
       });
       console.log(response.data);
       // Handle response
+      props.onClose();
+      if(response.data){
+        // router.push(`/mystore/profile?userid=${userid}`);
+        props.onClose();
+      }
+
     } catch (error) {
       // Handle error
       console.log(error)
@@ -116,7 +87,7 @@ const AddProductForm = ({isOpen}) => {
 
   return (
     <>
-    {isOpen&&(
+    {props.isOpen&&(
    <Container className={styles.addProduct}>
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="name">
@@ -126,6 +97,7 @@ const AddProductForm = ({isOpen}) => {
           placeholder="Enter product name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
       </Form.Group>
 
@@ -136,6 +108,7 @@ const AddProductForm = ({isOpen}) => {
           placeholder="Enter product brand"
           value={brand}
           onChange={(e) => setBrand(e.target.value)}
+          required
         />
       </Form.Group>
 
@@ -147,6 +120,7 @@ const AddProductForm = ({isOpen}) => {
           placeholder="Enter product description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          required
         />
       </Form.Group>
 
@@ -157,6 +131,7 @@ const AddProductForm = ({isOpen}) => {
           placeholder="Enter product category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
+          required
         />
       </Form.Group>
 
@@ -167,6 +142,7 @@ const AddProductForm = ({isOpen}) => {
           placeholder="Enter product price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
+          required
         />
       </Form.Group>
 
@@ -177,12 +153,13 @@ const AddProductForm = ({isOpen}) => {
           placeholder="Enter product count in stock"
           value={countInStock}
           onChange={(e) => setCountInStock(e.target.value)}
+          required
         />
       </Form.Group>
 
       <Form.Group controlId="image">
         <Form.Label>Image</Form.Label>
-        <Form.Control type="file" onChange={handleImageChange} />
+        <Form.Control type="file" onChange={handleImageChange} required/>
       </Form.Group>
 
       <Form.Group controlId="features">
@@ -205,7 +182,6 @@ const AddProductForm = ({isOpen}) => {
             //   value={feature.name}
              value={featureName}
               onChange={handleNameChange}
-              required
             />
             <Form.Control
               type="text"
@@ -214,7 +190,6 @@ const AddProductForm = ({isOpen}) => {
             //   value={feature.value}
               value={featureValue}
               onChange={handleValueChange}
-              required
             />
           {/* </div> */}
 

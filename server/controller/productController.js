@@ -5,6 +5,8 @@ import "dotenv/config";
 
 export default class ProductController{
     async addProduct(req,res){
+      console.log(req.file);
+  console.log(req.body.image);
        console.log(req.body);
       try {
         const productData = {
@@ -12,10 +14,7 @@ export default class ProductController{
           brand: req.body.brand,
           description: req.body.description,
           category: req.body.category,
-          image: {
-            data: fs.readFileSync(req.file.path),
-            contentType: req.file.mimetype,
-          },
+          image:req.file.path,
           price: req.body.price,
           countInStock: req.body.countInStock,
           features: req.body.features,

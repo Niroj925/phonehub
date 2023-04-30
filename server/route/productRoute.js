@@ -3,6 +3,7 @@ import  ProductController from '../controller/productController.js'
 import multer from 'multer';
 import fs from 'fs';
 
+
 const router =Router();
 
 const productController=new ProductController();

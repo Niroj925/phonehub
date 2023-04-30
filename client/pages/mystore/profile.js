@@ -3,45 +3,70 @@ import AddProduct from '../../component/addproduct.js';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link.js';
+import styles from '../../styles/Navbar.module.css'
+import { useRouter } from 'next/router.js';
 
 function Profile() {
   const [showAddProduct, setShowAddProduct] = useState(false);
+
+
+  const router=useRouter();
 
   const handleAddProductClick = () => {
     setShowAddProduct(true);
     console.log(showAddProduct)
   };
 
-  const handleCloseAddProduct = () => {
+  const handleMyProductClick = () => {
+    setShowAddProduct(false);
+    console.log(showAddProduct)
+  };
+  const handleOrderClick = () => {
     setShowAddProduct(false);
     console.log(showAddProduct)
   };
 
+  const handleClose=()=>{
+    setShowAddProduct(false);
+  }
+  
+  
+    const handleLogout = () => {
+      localStorage.removeItem("token");
+      router.push("/");
+    };
+  
   return (
     <div>
-         <Navbar bg="light" expand="lg">
-      <Navbar.Brand to="/">My Store</Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <Nav.Link to="/myproducts">My Products</Nav.Link>
-          <Nav.Link to="/addproduct">Add Product</Nav.Link>
-          <Nav.Link  to="/orders">Orders</Nav.Link>
-        </Nav>
-        <Nav className="ml-auto">
-          <Button variant="outline-primary">Log Out</Button>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
-
-      <Button onClick={handleAddProductClick}>Add Product</Button>
+      
+     <nav className={styles.navbar}>
+      <ul className={styles.navbarMenu}>
+  <li className={styles.navbarItems}>
+    <Link href="#" onClick={handleMyProductClick} className={styles.navLink}>
+      My Products
+    </Link>
+  </li>
+  <li className={styles.navbarItem}>
+    <Link href="#" onClick={handleAddProductClick} className={styles.navLink}>
+      Add Product
+    </Link>
+  </li>
+  <li className={styles.navbarItem}>
+    <Link href="#" onClick={handleOrderClick} className={styles.navLink}>
+      Order
+    </Link>
+  </li>
+</ul>
+<div>
+<Link href="#" onClick={handleLogout} className={styles.navLink}>
+      Logout
+    </Link>
+</div>
+</nav>
       {
         showAddProduct&&
         (
-            <>
-              <Button onClick={handleCloseAddProduct}>close</Button>
-            <AddProduct isOpen={showAddProduct} /> 
-            </>
+            <AddProduct isOpen={showAddProduct} onClose={handleClose} /> 
           
         )
         

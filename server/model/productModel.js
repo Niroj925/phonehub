@@ -10,10 +10,7 @@ const mobileSchema = mongoose.Schema({
   brand: { type: String, required: true },
   description: { type: String, required: true },
   category: { type: String, required: true },
-  image: {
-    data: Buffer,
-    contentType: String,
-  },
+  image:{type:String,required:true},
   price: { type: Number, required: true },
   countInStock: { type: Number, required: false },
   features: [featureSchema],
