@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 const featureSchema = mongoose.Schema({
-  name: { type: String, required: true },
-  value: { type: String, required: true }
+  name: { type: String, required: false },
+  value: { type: String, required: false }
 });
 
 const mobileSchema = mongoose.Schema({
@@ -10,7 +10,10 @@ const mobileSchema = mongoose.Schema({
   brand: { type: String, required: true },
   description: { type: String, required: true },
   category: { type: String, required: true },
-  image: { type: String, required: false },
+  image: {
+    data: Buffer,
+    contentType: String,
+  },
   price: { type: Number, required: true },
   countInStock: { type: Number, required: false },
   features: [featureSchema],

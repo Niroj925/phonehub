@@ -1,0 +1,12 @@
+.home{
+    background-color: rgb(184, 221, 218);
+}
+.shopbtn{
+    background-color: aquamarine;
+    border-radius: 25px;
+    color: black;
+    font-weight: bold;
+    padding-right: 20px;
+    padding-left: 20px;
+    
+}

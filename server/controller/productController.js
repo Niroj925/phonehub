@@ -1,19 +1,44 @@
 
 import productModel from '../model/productModel.js';
+import fs from 'fs';
 import "dotenv/config";
 
 export default class ProductController{
     async addProduct(req,res){
-          try {
-            const response = await productModel.create({...req.body});
-            if (response === null) {
-              return res.json([]);
-            } else {
-                  res.status(200).json({response})
-            }
-          } catch (err) {
-            return res.json(err);
-          }
+       console.log(req.body);
+      try {
+        const productData = {
+          name: req.body.name,
+          brand: req.body.brand,
+          description: req.body.description,
+          category: req.body.category,
+          image: {
+            data: fs.readFileSync(req.file.path),
+            contentType: req.file.mimetype,
+          },
+          price: req.body.price,
+          countInStock: req.body.countInStock,
+          features: req.body.features,
+          user: req.body.user,
+        
+        };
+        const response = await productModel.create(productData);
+        res.status(200).json({ response });
+      } catch (err) {
+        return res.json(err);
+      }
+    
+
+          // try {
+          //   const response = await productModel.create({...req.body});
+          //   if (response === null) {
+          //     return res.json([]);
+          //   } else {
+          //         res.status(200).json({response})
+          //   }
+          // } catch (err) {
+          //   return res.json(err);
+          // }
         
 }
 
