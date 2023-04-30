@@ -12,6 +12,6 @@ router.post('/register',userController.register);
 router.post('/login',userController.authUser);
 // router.post('/remove',userController.deleteUser)
 router.get('/',userController.getAllUsers);
-router.get('/getproduct', userController.getProduct);
+router.get('/getproduct/:userId', validateToken, userController.getProduct);
 
 export default router;

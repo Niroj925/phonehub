@@ -84,47 +84,14 @@ async getAllUsers(req, res) {
 }
 
 async getProduct(req, res) {
- console.log(req.file);
-  console.log(req.body.image);
-    // try {
-    //     // console.log(req.body.userId);
-    //   const products = await productModel.find({ user: req.body.userId }).populate('user');
-    //   res.status(200).json(products);
-    // } catch (error) {
-    //   res.status(500).json({ message: error.message });
-    // }
     try {
-      // const productId = req.body.userId;
-      const product = await productModel.find({ user: req.body.userId }).populate('user');
-    //  console.log(product)
-      if (product) {
-        // const image = fs.readFileSync(`./public/image/${product.image}`);
-        // const base64Image = Buffer.from(image).toString('base64');
-        const imagePath = path.join(__dirname, '../public/image', product.image);
-        const imageBuffer = fs.readFileSync(imagePath);
-        const base64Image = Buffer.from(imageBuffer).toString('base64');
-        
-        const productData = {
-          id: product._id,
-          name: product.name,
-          brand: product.brand,
-          description: product.description,
-          category: product.category,
-          image: base64Image,
-          price: product.price,
-          countInStock: product.countInStock,
-          features: product.features,
-          user: product.user,
-        };
-  
-        res.status(200).json(productData);
-      } else {
-        res.status(404).json({ message: 'Product not found' });
-      }
+        console.log(req.params.userId);
+      const products = await productModel.find({ user: req.params.userId }).populate('user');
+      res.status(200).json(products);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server error' });
+      res.status(500).json({ message: error.message });
     }
+    
   }
 
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AddProduct from '../../component/addproduct.js';
+import MyProduct from '../../component/myproduct.js';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link.js';
@@ -8,22 +9,29 @@ import { useRouter } from 'next/router.js';
 
 function Profile() {
   const [showAddProduct, setShowAddProduct] = useState(false);
-
+  const [showMyProduct,setShowMyProduct]=useState(false);
+  const [showOrder,setShowOrder]=useState(false);
 
   const router=useRouter();
 
   const handleAddProductClick = () => {
     setShowAddProduct(true);
-    console.log(showAddProduct)
+    setShowMyProduct(false);
+    setShowOrder(false);
+    // console.log(showAddProduct)
   };
 
   const handleMyProductClick = () => {
+    setShowMyProduct(true);
     setShowAddProduct(false);
-    console.log(showAddProduct)
+    setShowOrder(false);
+    // console.log(showAddProduct)
   };
   const handleOrderClick = () => {
     setShowAddProduct(false);
-    console.log(showAddProduct)
+    setShowMyProduct(false);
+    setShowOrder(true);
+    // console.log(showAddProduct)
   };
 
   const handleClose=()=>{
@@ -69,8 +77,15 @@ function Profile() {
             <AddProduct isOpen={showAddProduct} onClose={handleClose} /> 
           
         )
-        
+         
       }
+      {
+         showMyProduct&&(
+        <MyProduct />
+        )   
+      }
+
+
              
      
     </div>
