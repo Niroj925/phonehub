@@ -6,6 +6,8 @@ import productRoute from './route/productRoute.js';
 import orderRoute from './route/orderRoute.js';
 import reviewRoute from  './route/reviewRoute.js';
 
+import {notfound,errHandler} from './middleware/errorMiddleware.js';
+
 // import customerRoute from './route/customerRoute.js';
 // import orderItemRoute from './route/orderItemRoute.js';
 import "dotenv/config"
@@ -29,7 +31,11 @@ app.use('/api/order',orderRoute);
 app.use('/api/review',reviewRoute);
 // app.use('/api/customer',customerRoute);
 
+//this is statc url for image 
 app.use('/public/image',express.static('./public/image'));
+
+app.use(notfound);
+app.use(errHandler);
 
 app.listen(8080,(req,res)=>{
     console.log('backend is running ');

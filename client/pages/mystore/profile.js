@@ -3,7 +3,7 @@ import AddProduct from '../../component/addproduct.js';
 import MyProduct from '../../component/myproduct.js';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Link from 'next/link.js';
+import div from 'next/link.js';
 import styles from '../../styles/Navbar.module.css'
 import { useRouter } from 'next/router.js';
 
@@ -36,6 +36,8 @@ function Profile() {
 
   const handleClose=()=>{
     setShowAddProduct(false);
+    setShowMyProduct(false);
+    setShowOrder(false);
   }
   
   
@@ -50,25 +52,25 @@ function Profile() {
      <nav className={styles.navbar}>
       <ul className={styles.navbarMenu}>
   <li className={styles.navbarItems}>
-    <Link href="#" onClick={handleMyProductClick} className={styles.navLink}>
+    <div  onClick={handleMyProductClick} className={styles.navLink}>
       My Products
-    </Link>
+    </div>
   </li>
   <li className={styles.navbarItem}>
-    <Link href="#" onClick={handleAddProductClick} className={styles.navLink}>
+    <div  onClick={handleAddProductClick} className={styles.navLink}>
       Add Product
-    </Link>
+    </div>
   </li>
   <li className={styles.navbarItem}>
-    <Link href="#" onClick={handleOrderClick} className={styles.navLink}>
+    <div  onClick={handleOrderClick} className={styles.navLink}>
       Order
-    </Link>
+    </div>
   </li>
 </ul>
 <div>
-<Link href="#" onClick={handleLogout} className={styles.navLink}>
+<div  onClick={handleLogout} className={styles.navLink}>
       Logout
-    </Link>
+    </div>
 </div>
 </nav>
       {
@@ -81,7 +83,7 @@ function Profile() {
       }
       {
          showMyProduct&&(
-        <MyProduct />
+        <MyProduct isOpen={showMyProduct} onClose={handleClose}/>
         )   
       }
 

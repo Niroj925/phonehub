@@ -33,12 +33,14 @@
     text-decoration: none;
     font-size:large;
     margin-left: 10px;
+    cursor: pointer;
   }
   .navLink:hover{
     /* font-weight: bold; */
     color:whitesmoke;
     background-color: #abb4b2;
     padding: 10px;
+    cursor: pointer;
   }
 
   .navbarLink {

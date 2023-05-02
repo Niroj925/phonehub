@@ -3,6 +3,7 @@ import  ProductController from '../controller/productController.js'
 import multer from 'multer';
 import fs from 'fs';
 
+// const upload = multer({ dest: 'uploads/' })
 
 const router =Router();
 
@@ -39,7 +40,7 @@ const productController=new ProductController();
   const upload = multer({
     storage: storage,
     limits: {
-      fileSize: 1024 * 1024 * 5,
+      fileSize: 1024 * 1024 * 3,//this is for limit 1mb
     },
     fileFilter: fileFilter,
   });
@@ -51,6 +52,6 @@ router.put('/updateprice',productController.updateProductPrice);
 router.put('/addfeature',productController.addFeatures);
 router.delete('/remove',productController.deleteProduct);
 router.get('/getproduct',productController.getAllProduct);
-router.get('/getfilterproduct',productController.getProductsWithFilters);
+router.post('/getfilterproduct',productController.getProductsWithFilters);
 
 export default router;

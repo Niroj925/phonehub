@@ -5,6 +5,8 @@ import styles from '../styles/AddProduct.module.css'
 import axios from 'axios';
 import api from '../pages/api/api.js'
 import { useRouter } from 'next/router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddProductForm = (props) => {
   const [name, setName] = useState('');
@@ -75,12 +77,33 @@ const AddProductForm = (props) => {
       props.onClose();
       if(response.data){
         // router.push(`/mystore/profile?userid=${userid}`);
+        toast.success('Product added successfully', {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+
         props.onClose();
       }
 
     } catch (error) {
       // Handle error
       console.log(error)
+      toast.error('Image file too large', {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
   
@@ -211,6 +234,7 @@ const AddProductForm = (props) => {
         </Container>
     )
 }
+  <ToastContainer/>
         </>
 
         )}

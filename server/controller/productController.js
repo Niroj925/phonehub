@@ -5,6 +5,7 @@ import "dotenv/config";
 
 export default class ProductController{
     async addProduct(req,res){
+
       console.log(req.file);
   console.log(req.body.image);
        console.log(req.body);
@@ -51,12 +52,16 @@ export default class ProductController{
   }
 
   async getProductsWithFilters(req, res) {
+  
     try {
-      const { brand, priceMin, priceMax, features } = req.body;
+      const {name, brand, priceMin, priceMax, features } = req.body;
       let filter = {};
   
       if (brand) {
         filter.brand = { $regex: brand, $options: 'i' };
+      }
+      if (name) {
+        filter.name = { $regex: name, $options: 'i' };
       }
   
       if (priceMin && priceMax) {
@@ -67,13 +72,21 @@ export default class ProductController{
         filter.price = { $lte: priceMax };
       }
   
+      // if (features) {
+      //   const featureFilters = features.map(feature => ({
+      //     'features.name': feature.name,
+      //     'features.value': feature.value
+      //   }));
+      //   filter.$and = featureFilters;
+      // }
       if (features) {
         const featureFilters = features.map(feature => ({
-          'features.name': feature.name,
-          'features.value': feature.value
+          'features.name': { $regex: new RegExp(feature.name, 'i') },
+          'features.value': { $regex: new RegExp(feature.value, 'i') }
         }));
         filter.$and = featureFilters;
       }
+      
     
      console.log(filter);
       const products = await productModel.find(filter).populate('user', 'id name email');

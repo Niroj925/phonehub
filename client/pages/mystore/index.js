@@ -6,13 +6,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+// import {setUser} from '../../store/slice/userSlice.js';
+import {setUser} from '../../store/slices/userSlice';
 import { useRouter } from 'next/router';
 import Navbar from '../../component/navbar.js'
 import Footer from '../../component/footer.js'
+import { useDispatch } from 'react-redux';
 
 export default function SignUpForm() {
   const router = useRouter();
+  const dispatch=useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -52,6 +55,7 @@ export default function SignUpForm() {
         theme: "light",
         });
         localStorage.setItem('token', JSON.stringify(res.data.token));
+        dispatch(setUser(res.data));
         const userid=res.data._id;
         router.push(`/mystore/profile?userid=${userid}`); 
       }
