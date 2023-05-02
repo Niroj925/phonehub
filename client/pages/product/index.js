@@ -7,17 +7,13 @@ import styles from '../../styles/ProductCard.module.css';
 
 function index() {
     const [products,setProducts]=useState([])
-    const[slectedProduct,setSelectedProduct]=useState(null);
-    const[showSelectedProduct,setShowSelectedProduct]=useState(false);
     const [minPrice,setMinPrice]=useState()
     const [maxPrice,setMaxPrice]=useState()
     const [name,setName]=useState();
     const [brand,setBrand]=useState();
-  
-    // const { userid } = router.query
-    // console.log(userid);
+ 
    const router=useRouter();
- // {name, brand, priceMin, priceMax, features } 
+   
       const filterSearchData={
               name:name,
               brand:brand,
@@ -51,9 +47,7 @@ function index() {
     },[])
    
     const handleCardClick=(product)=>{
-       setSelectedProduct(product);
-        console.log(slectedProduct);
-        setShowSelectedProduct(true);
+        router.push(`/product/selectedProduct?id=${product._id}`)
     }
 
     const Search=()=>{
@@ -101,15 +95,6 @@ function index() {
           <Button onClick={Search}>Submit</Button>
           </div>
         </Col>
-        {/* <Col>
-          <Form.Control
-          value={maxPrice}
-          onChange={(e)=>setMaxPrice(e.target.value)}
-          placeholder="price to " />
-        </Col> */}
-        {/* <Col>
-        <Button onClick={Search}>Submit</Button>
-        </Col> */}
         <Col>
         <Button onClick={LowToHigh}>Lower To Higher</Button>
         </Col>
@@ -124,8 +109,6 @@ function index() {
        <Row>
          <h2>Available products</h2>
          <hr/>
-     {
-       (!showSelectedProduct)?(
             <Row xs={1} sm={2} md={3}>
         {products.map((product) => (
           <Col key={product._id} className={styles.productCard}>
@@ -141,36 +124,6 @@ function index() {
           </Col>
         ))}
       </Row>
-       ):(
-        
-          <Col key={slectedProduct._id} className={styles.selectedProductCard}  xs={12} sm={9} md={9} >
-            <Card >
-              <div style={{display:'flex',justifyContent:"end"}}>
-                <Button onClick={()=>{setShowSelectedProduct(false)}} >Close</Button>
-              </div>
-              
-              <Card.Img variant="top" src={`http://localhost:8080/${slectedProduct.image}`} className={styles.selectedCardImage}/>
-              <hr/>
-              <Card.Body>
-                <Card.Title>{slectedProduct.name}</Card.Title>
-               
-                <h5>Price:{slectedProduct.price}</h5>
-                <h5>Brand:{slectedProduct.brand}</h5>
-                <hr/>
-                <h7>Description:{slectedProduct.description}</h7>
-                <hr/>
-                {slectedProduct.features.map((feature) => (
-  <div key={feature._id}>
-    <p>{feature.name}: {feature.value}</p>
-  </div>
-))}
-               
-              </Card.Body>
-            </Card>
-          </Col>
-         
-        )
-       }
        </Row>
        </Stack>
     </Container>

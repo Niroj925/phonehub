@@ -53,5 +53,6 @@ router.put('/addfeature',productController.addFeatures);
 router.delete('/remove',productController.deleteProduct);
 router.get('/getproduct',productController.getAllProduct);
 router.post('/getfilterproduct',productController.getProductsWithFilters);
+router.post('/getproductbyid',productController.getProductById)
 
 export default router;
