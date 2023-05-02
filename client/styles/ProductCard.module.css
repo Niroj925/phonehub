@@ -22,6 +22,7 @@
     margin-bottom: 10px;
     justify-content: center;
     align-items: center;
+    
   }
   
   .selectedProductCard:hover {
@@ -47,5 +48,11 @@
     border: 2px solid #fff;
     transition: all 0.3s ease-in-out;
     background-color: #e6f0f0fd;
+    padding: 15px;
+  }
+
+  .customerCard{
+    margin-top: 10px;
+    border: 2px solid #fff;
     padding: 15px;
   }

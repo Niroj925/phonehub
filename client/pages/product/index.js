@@ -13,7 +13,7 @@ function index() {
     const [brand,setBrand]=useState();
  
    const router=useRouter();
-   
+
       const filterSearchData={
               name:name,
               brand:brand,
@@ -49,7 +49,9 @@ function index() {
     const handleCardClick=(product)=>{
         router.push(`/product/selectedProduct?id=${product._id}`)
     }
-
+    const buyNow=(product)=>{
+      router.push(`/product/buy?id=${product._id}`)
+  }
     const Search=()=>{
 
       getMyProducts(filterSearchData)
@@ -71,7 +73,7 @@ function index() {
         <Stack>
        <Row className={styles.filterBar}>
        <Form>
-       <Row xs={1} sm={2} md={3}>
+       <Row xs={1} sm={2} md={3} >
        <Col style={{marginBottom:'5px'}}>
           <Form.Control 
           value={name}
@@ -80,25 +82,28 @@ function index() {
            />
         </Col>
         
-        <Col>
+        <Col style={{marginBottom:'5px'}}>
         <div style={{display:'flex',justifyContent:'space-between'}}>
           <Form.Control 
           value={minPrice}
           onChange={(e)=>setMinPrice(e.target.value) }
           placeholder="price from"
+          
            />
           
            <Form.Control
           value={maxPrice}
           onChange={(e)=>setMaxPrice(e.target.value)}
-          placeholder="price to " />
-          <Button onClick={Search}>Submit</Button>
+          placeholder="price to "
+          style={{marginLeft:'5px'}}
+          />
+          <Button onClick={Search} style={{marginLeft:'5px'}}>Submit</Button>
           </div>
         </Col>
-        <Col>
+        <Col style={{marginBottom:'5px'}}>
         <Button onClick={LowToHigh}>Lower To Higher</Button>
         </Col>
-        <Col>
+        <Col style={{marginBottom:'5px'}}>
         <Button onClick={HighToLow}> Higher To Lower</Button>
         </Col>
       </Row>
@@ -112,15 +117,21 @@ function index() {
             <Row xs={1} sm={2} md={3}>
         {products.map((product) => (
           <Col key={product._id} className={styles.productCard}>
-            <Card onClick={() => handleCardClick(product)} >
-              <Card.Img variant="top" src={`http://localhost:8080/${product.image}`} className={styles.cardImage} />
+            <Card  >
+              <Card.Img 
+              variant="top"
+               src={`http://localhost:8080/${product.image}`} 
+               className={styles.cardImage}
+               onClick={() => handleCardClick(product)}
+               />
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>
                 <Card.Text style={{fontWeight:'bold'}}>Price:{product.price}</Card.Text>
-                <Button >Buy Now</Button>
+                <Button onClick={()=>buyNow(product)} >Buy Now</Button>
               </Card.Body>
               
             </Card>
+            {/* <Button onClick={()=>buyNow(product)} >Buy Now</Button> */}
           </Col>
         ))}
       </Row>
