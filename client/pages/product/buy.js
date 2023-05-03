@@ -6,10 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../../styles/ProductCard.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
-function SelectedProduct({ product }) {
-    // console.log(product)
-
+function SelectedProduct({ product,customer }) {
+    console.log(product)
+    console.log(customer)
+    
     const [formData, setFormData] = useState({
         user:product.user,
         customerName: '',
@@ -162,13 +164,19 @@ export async function getServerSideProps({ query }) {
    console.log(userId)
    console.log('productid:')
    console.log(productId);
-    const response = await api.post(`product/getproductbyid`, {
-      productId:userId
+
+    const productResponse = await api.post(`product/getproductbyid`, {
+      productId:productId
+    });
+
+    const customerResponse = await axios.post(`http://localhost:8080/user/customer`, {
+      customerId:userId
     });
   
     return {
       props: {
-        product: response.data,
+        product: productResponse.data,
+        customer:customerResponse.data,
         revalidate: 1
       }
     }

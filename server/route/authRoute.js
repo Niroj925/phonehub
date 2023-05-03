@@ -21,5 +21,7 @@ customerController.googleauth
 
 )
 
+router.post('/customer',customerController.getCustomerById);
+
 
 export default router;
