@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { Container,Stack, Form, Row, Col, Card ,Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../../styles/ProductCard.module.css';
+import GoogleDialogBox from '@/component/diologuebox';
 
 function index() {
     const [products,setProducts]=useState([])
@@ -11,7 +12,8 @@ function index() {
     const [maxPrice,setMaxPrice]=useState()
     const [name,setName]=useState();
     const [brand,setBrand]=useState();
- 
+    const [showDiaogue,setShowDialogue]=useState(false);
+    const [selectedPid,setSelectedPid]=useState('');
    const router=useRouter();
 
       const filterSearchData={
@@ -50,7 +52,15 @@ function index() {
         router.push(`/product/selectedProduct?id=${product._id}`)
     }
     const buyNow=(product)=>{
-      router.push(`/product/buy?id=${product._id}`)
+       setSelectedPid(product._id);
+      //  console.log(selectedPid);
+      // router.push(`/product/buy?id=${product._id}`)
+      setShowDialogue(true);
+
+  }
+
+  const handleClose=()=>{
+    setShowDialogue(false);
   }
     const Search=()=>{
 
@@ -137,6 +147,7 @@ function index() {
       </Row>
        </Row>
        </Stack>
+       <GoogleDialogBox isOpen={showDiaogue} onClose={handleClose} productId={selectedPid}/>
     </Container>
   )}
 

@@ -37,8 +37,14 @@ function SelectedProduct({ product }) {
       });
       
 
-    const router=useRouter();
-  const { id } = router.query;
+  const router = useRouter();
+  // const userId = router.query.userid;
+  // const productId = router.query.productid;
+  const { userid, productid } = router.query;
+  console.log('userId:')
+  console.log(userid)
+  console.log('productid:')
+  console.log(productid)
 
   const handleClose=()=>{
     router.push('/product');
@@ -150,10 +156,14 @@ function SelectedProduct({ product }) {
 }
 
 export async function getServerSideProps({ query }) {
-    const id = query.id;
-  
+    const productId = query.productid;
+   const userId=query.userid;
+   console.log('userId:')
+   console.log(userId)
+   console.log('productid:')
+   console.log(productId);
     const response = await api.post(`product/getproductbyid`, {
-      productId: id
+      productId:userId
     });
   
     return {
