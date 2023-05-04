@@ -18,6 +18,7 @@ function myproduct() {
     const { userid } = router.query
     console.log(userid);
 
+    useEffect(()=>{
     const getMyProducts=async ()=>{
     try {
       const response = await api.get(`user/getproduct/${userid}`, {
@@ -34,10 +35,8 @@ function myproduct() {
         router.push('/');
       }
     }
-
-    useEffect(()=>{
         getMyProducts();
-    },[])
+    },[userid])
    
     const handleCardClick=(product)=>{
        setSelectedProduct(product);

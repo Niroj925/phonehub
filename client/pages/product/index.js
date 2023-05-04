@@ -53,6 +53,7 @@ function index() {
     }
     const buyNow=(product)=>{
        setSelectedPid(product._id);
+       localStorage.setItem('slectedproductid', JSON.stringify(product._id));
       //  console.log(selectedPid);
       // router.push(`/product/buy?id=${product._id}`)
       setShowDialogue(true);
@@ -147,7 +148,7 @@ function index() {
       </Row>
        </Row>
        </Stack>
-       <GoogleDialogBox isOpen={showDiaogue} onClose={handleClose} productId={selectedPid}/>
+       <GoogleDialogBox isOpen={showDiaogue} onClose={handleClose} />
     </Container>
   )}
 

@@ -9,6 +9,8 @@ const orderItemSchema = mongoose.Schema({
 
 const orderSchema =mongoose.Schema({
     user: { type:mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
+    customerId: { type:mongoose.Schema.Types.ObjectId, ref: 'customer', required: true },
+    customerEmail:{type:String,required:true},
     customerName:{type:String,required:true},
     customerContact:{type:Number,required:true},
     orderItems: orderItemSchema,

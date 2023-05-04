@@ -98,3 +98,11 @@
     background-color: #333;
     color: #fff;
   }
+
+  .button{
+    font-weight:bold;
+  }
+  .button:hover{
+    background-color:red;
+    font-weight: bold;
+  }

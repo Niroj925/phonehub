@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import {FaGoogle} from 'react-icons/fa';
+import styles from '../styles/Navbar.module.css';
 
 function GoogleDialog(props) {
-    console.log('productid:');
-    console.log(props.productId)
  
   const handleClose = () => {
     props.onClose();
@@ -12,8 +12,7 @@ function GoogleDialog(props) {
     const googleAuth=async()=>{
     
         window.open(
-            // `http://localhost:8080/user/auth/google`,
-            `http://localhost:8080/user/auth/google?productId=${props.productId}`,
+            `http://localhost:8080/user/auth/google`,
             "_self"
         )
     }
@@ -26,8 +25,12 @@ function GoogleDialog(props) {
         </Modal.Header>
 
         <Modal.Body>
-          <Button variant="primary"   onClick={googleAuth}>
-            Continue with Google
+          <Button    onClick={googleAuth} 
+            className={styles.button}
+          >
+            <FaGoogle style={{marginRight:'5px'}}/> 
+             Continue with Google
+           
           </Button>
         </Modal.Body>
 

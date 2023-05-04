@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AddProduct from '../../component/addproduct.js';
 import MyProduct from '../../component/myproduct.js';
+import MyOrder from '../../component/myorder.js';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import div from 'next/link.js';
@@ -10,34 +11,34 @@ import { useRouter } from 'next/router.js';
 function Profile() {
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [showMyProduct,setShowMyProduct]=useState(false);
-  const [showOrder,setShowOrder]=useState(false);
+  const [showMyOrder,setShowMyOrder]=useState(false);
 
   const router=useRouter();
 
   const handleAddProductClick = () => {
     setShowAddProduct(true);
     setShowMyProduct(false);
-    setShowOrder(false);
+    setShowMyOrder(false);
     // console.log(showAddProduct)
   };
 
   const handleMyProductClick = () => {
     setShowMyProduct(true);
     setShowAddProduct(false);
-    setShowOrder(false);
+    setShowMyOrder(false);
     // console.log(showAddProduct)
   };
   const handleOrderClick = () => {
     setShowAddProduct(false);
     setShowMyProduct(false);
-    setShowOrder(true);
+    setShowMyOrder(true);
     // console.log(showAddProduct)
   };
 
   const handleClose=()=>{
     setShowAddProduct(false);
     setShowMyProduct(false);
-    setShowOrder(false);
+    setShowMyOrder(false);
   }
   
   
@@ -84,6 +85,11 @@ function Profile() {
       {
          showMyProduct&&(
         <MyProduct isOpen={showMyProduct} onClose={handleClose}/>
+        )   
+      }
+      {
+         showMyOrder&&(
+        <MyOrder isOpen={showMyOrder} onClose={handleClose}/>
         )   
       }
 

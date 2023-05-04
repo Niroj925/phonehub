@@ -24,9 +24,16 @@ function Homepage() {
       
         <div style={{ position: 'absolute', top: '40%', left: '10%' }}>
          <h3 style={{color:'white'}}>Buy the latest mobile phones</h3>
-         <Button className={styles.shopbtn} onClick={() => {
+         <Button id={styles.btnid} className={styles.btn} onClick={() => {
             window.location.href = '/product';
           }}
+          // style={{
+          //   backgroundColor:'aquamarine',
+          //   borderRadius:'25px',
+          //   color:'black',
+          //   fontWeight:'bold',
+     
+          // }}
           >Shop Now</Button>
         </div>
       </div>

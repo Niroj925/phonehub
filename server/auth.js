@@ -2,7 +2,6 @@ import GoogleStrategy from'passport-google-oauth20';
 import passport from 'passport';
 import 'dotenv/config';
 import customerModel from './model/customerAccount.js';
-import findOrCreate from 'mongoose-findorcreate';
 
 const{GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET}=process.env;
 
@@ -10,22 +9,22 @@ const{GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET}=process.env;
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:8080/user/auth/google/callback",
+    // callbackURL:` http://localhost:8080/user/auth/google/callback?productId=${productId}`,
     passReqToCallback:true
   },
+
   async function(request, accessToken, refreshToken, profile, done) {
-   const response= customerModel.find({email:profile.emails[0].value});
-   console.log(response);
-    //  console.log(profile);
-    customerModel.findOrCreate({ email:profile.emails[0].value,name:profile.displayName}, function (err, user) {
+  
+    customerModel.findOrCreate({ email: profile.emails[0].value, name: profile.displayName }, function (err, user) {
       console.log('users info:')
       console.log(user);
       if (err) {
-         return done(err);
-       }
-       return done(null,user);
-     });
-   
+        return done(err);
+      }
+      return done(null, user);
+    });
   }
+  
   ));
 
 //to read and write from passport session we have to do serialize and deserialize 
