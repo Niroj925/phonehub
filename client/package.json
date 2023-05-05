@@ -9,16 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.15.1",
+    "@react-google-maps/api": "^2.18.1",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
+    "google-map-react": "^2.2.0",
+    "google-maps-api-loader": "^1.1.1",
+    "google-maps-react": "^2.0.6",
     "jspdf": "^2.5.1",
+    "leaflet": "^1.9.3",
     "next": "13.3.1",
     "next-redux-wrapper": "^8.1.0",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
-    "react-dom": "18.2.0",
+    "react-dom": "^18.2.0",
+    "react-google-maps": "^7.3.0",
     "react-icons": "^4.8.0",
+    "react-leaflet": "^4.2.1",
     "react-redux": "^8.0.5",
     "react-toastify": "^9.1.2",
     "redux": "^4.2.1",
@@ -26,5 +34,9 @@
     "redux-thunk": "^2.4.2",
     "socket.io-client": "^4.6.1",
     "toastify": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/googlemaps": "^3.43.3",
+    "webpack-external-import": "^2.2.4"
   }
 }

@@ -7,6 +7,10 @@ import styles from '../../styles/ProductCard.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+// import Map from '../../component/map.js';
+import dynamic from 'next/dynamic';
+
+const Map=dynamic(()=>import('../../component/map'))
 
 function SelectedProduct({customer }) {
    
@@ -135,7 +139,8 @@ useEffect(() => {
       }
     />
   </Form.Group>
-
+  
+  {/* <Map/> */}
 
   {/* <Form.Group controlId="shippingAddress.address">
     <Form.Label>Address</Form.Label>

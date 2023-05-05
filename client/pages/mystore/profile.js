@@ -43,8 +43,12 @@ function Profile() {
   
   
     const handleLogout = () => {
-      localStorage.removeItem("token");
+      const confirmed = window.confirm('Do you want to Logout your Account?');
+      if(confirmed){
+        localStorage.removeItem("token");
       router.push("/");
+      }
+     
     };
   
   return (

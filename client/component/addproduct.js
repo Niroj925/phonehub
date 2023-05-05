@@ -213,6 +213,7 @@ const AddProductForm = (props) => {
             //   value={feature.value}
               value={featureValue}
               onChange={handleValueChange}
+              style={{marginTop:'5px'}}
             />
           {/* </div> */}
 
