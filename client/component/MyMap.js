@@ -9,7 +9,7 @@ const MyMap = () => {
 
   // create a custom marker icon
   const customMarkerIcon = new L.Icon({
-    iconUrl:import("../public/image/location-pin.png"),
+    iconUrl:'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
     iconSize: [40, 40],
     iconAnchor: [17, 46], //[left/right, top/bottom]
     popupAnchor: [0, -46], //[left/right, top/bottom]
