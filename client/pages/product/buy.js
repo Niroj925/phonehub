@@ -9,15 +9,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 // import Map from '../../component/map.js';
 import dynamic from 'next/dynamic';
+import { RiCloseLine } from 'react-icons/ri';
 
-const Map=dynamic(()=>import('../../component/map'))
+
+const MarkersMap = dynamic(() => import('../../component/MyMap.js'), {
+  ssr: false,
+});
 
 function SelectedProduct({customer }) {
    
-    // console.log(customer)
-    const [product, setProduct] = useState({});
+    // console.log(customer)  
+  const [product, setProduct] = useState({});
 const [formData, setFormData] = useState({});
-
+const [showMap,setShowMap]=useState(false);
+const [markerPosition, setMarkerPosition] = useState(null);
+const [locationName,setLocationName]=useState('')
 const router = useRouter();
 const { userid } = router.query;
 
@@ -28,6 +34,7 @@ useEffect(() => {
     const productResponse = await api.post(`product/getproductbyid`, {
       productId: productId
     });
+
     setProduct(productResponse.data);
 
     setFormData({
@@ -44,12 +51,9 @@ useEffect(() => {
       shippingAddress: {
         address: 'ktm',
         location: {
-          lon: '',
-          lat: ''
+          lat: 27.11,
+          lon: 85.66
         },
-        city: 'kathmandu',
-        postalCode: '1010',
-        country: 'Nepal'
       },
       paymentMethod: 'Cash on Delivery',
       itemsPrice: productResponse.data.price,
@@ -72,9 +76,41 @@ useEffect(() => {
     router.push('/product');
   }
 
+  const handleMarkerPositionChange =  (position) => {
+    setMarkerPosition(position); 
+    try{
+      axios
+      .get(`https://nominatim.openstreetmap.org/reverse?lat=${position[0]}&lon=${position[1]}&format=json`)
+      .then((response) => {
+        const { display_name } = response.data;
+        setLocationName(display_name);
+       // set the location value 
+        setFormData({
+          ...formData,
+          shippingAddress: {
+            ...formData.shippingAddress,
+            address: display_name,
+            location: {
+              lat: position[0],
+              lon: position[1]
+            }
+          }
+        });
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }catch(err){
+      console.log(err)
+    }
+
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // API request with formData
+
     console.log(formData);
 
     try {
@@ -139,8 +175,31 @@ useEffect(() => {
       }
     />
   </Form.Group>
+  {
+    !showMap?(
+      <Button onClick={()=>setShowMap(true)} style={{marginTop:'10px'}}>Set Location</Button>
+    ):(
+      <div style={{ display:'flex', justifyContent:'end'}}>  
+          <RiCloseLine onClick={()=>setShowMap(false)} size={40}>Close</RiCloseLine>      
+      </div>
+   )
+  }
   
-  {/* <Map/> */}
+  {
+    showMap&&(
+      <>
+       <MarkersMap onMarkerPositionChange={handleMarkerPositionChange} />
+      </>
+     
+      
+    )
+  }
+   {markerPosition && (
+        <p>
+          {/* Marker Position: {markerPosition[0]}, {markerPosition[1]} */}
+          Your Address:{locationName}
+        </p>
+      )}
 
   {/* <Form.Group controlId="shippingAddress.address">
     <Form.Label>Address</Form.Label>

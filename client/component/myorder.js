@@ -59,14 +59,14 @@ function downloadPDF(selectedOrder) {
   doc.text(`Order ID: ${selectedOrder._id}`, 15, 5);
   doc.text(`Customer Name: ${selectedOrder.customerName}`, 15, 10);
   doc.text(`Customer Contact: ${selectedOrder.customerContact}`, 15, 15);
-//   doc.text(`Address:${selectedOrder.}`)
-  doc.text(`Order Name: ${selectedOrder.orderItems.product.name}`, 15, 20);
-  doc.text(`Brand: ${selectedOrder.orderItems.product.brand}`, 15, 25);
-  doc.text(`Price: ${selectedOrder.orderItems.price}`, 15, 30);
-  doc.text(`Shipping Fee: ${selectedOrder.shippingPrice}`, 15, 35); 
-  doc.text(`Total payment: ${selectedOrder.totalPrice}`, 15, 40);
-  doc.text(`Payment Method: ${selectedOrder.paymentMethod}`, 15, 45);
-  doc.text(`Ordered Date: ${new Date(selectedOrder.updatedAt).toLocaleDateString()}`, 15, 50);
+  doc.text(`Address:${selectedOrder.shippingAddress.address.split(", ").slice(0,5).join(", ")}`,15,20)
+  doc.text(`Order Name: ${selectedOrder.orderItems.product.name}`, 15, 25);
+  doc.text(`Brand: ${selectedOrder.orderItems.product.brand}`, 15, 30);
+  doc.text(`Price: ${selectedOrder.orderItems.price}`, 15, 35);
+  doc.text(`Shipping Fee: ${selectedOrder.shippingPrice}`, 15, 40); 
+  doc.text(`Total payment: ${selectedOrder.totalPrice}`, 15, 45);
+  doc.text(`Payment Method: ${selectedOrder.paymentMethod}`, 15, 50);
+  doc.text(`Ordered Date: ${new Date(selectedOrder.updatedAt).toLocaleDateString()}`, 15, 55);
 
   // save the document
   doc.save(`${selectedOrder.customerName}_order.pdf`);
@@ -119,6 +119,7 @@ function downloadPDF(selectedOrder) {
       </thead>
       <tbody style={{ overflowY: 'scroll', maxHeight: '400px' }}>
         {orders.map((order) => (
+            
             !order.isDelivered&&(
           <tr key={order._id}>
             <td onClick={()=>selectOrder(order)} style={{cursor:'pointer'}}>{order._id}</td>
@@ -127,11 +128,7 @@ function downloadPDF(selectedOrder) {
             <td>{order.orderItems.price}</td>
             <td>{order.customerName}</td>
             <td>{order.customerContact}</td>
-            <td>{order.shippingAddress.address}</td>
-            {/* <td>
-              {order.shippingAddress.location.lon},{' '}
-              {order.shippingAddress.location.lat}
-            </td> */}
+            <td>{order.shippingAddress.address.split(", ").slice(0, 3).join(", ")}</td>      
           </tr>
             )
         ))}
@@ -156,6 +153,10 @@ function downloadPDF(selectedOrder) {
           <tr>
             <td>Customer Contact</td>
             <td>{selectedOrder.customerContact}</td>
+          </tr> 
+          <tr>
+            <td>Customer Address</td>
+            <td>{selectedOrder.shippingAddress.address}</td>
           </tr> 
           <tr>
             <td>Order Name</td>

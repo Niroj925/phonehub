@@ -17,12 +17,9 @@ const orderSchema =mongoose.Schema({
     shippingAddress: {
       address: { type: String, required: true },
       location:{
-       lon:{type:Number,required:false},
-       lat:{type:Number,required:false},
-      },
-      city: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      country: { type: String, required: false }
+       lat:{type:Number,required:true},
+       lon:{type:Number,required:true},
+      }
     },
     paymentMethod: { type: String, required: true },
     paymentResult: {

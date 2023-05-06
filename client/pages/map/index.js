@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import dynamic from 'next/dynamic';
 
 const MarkersMap = dynamic(() => import('../../component/MyMap.js'), {
@@ -6,7 +6,23 @@ const MarkersMap = dynamic(() => import('../../component/MyMap.js'), {
 });
 
 function Index() {
-  return <MarkersMap/>;
+  const [markerPosition, setMarkerPosition] = useState(null);
+
+  const handleMarkerPositionChange = (position) => {
+    setMarkerPosition(position);
+  };
+  // return <MarkersMap/>;
+  return (
+    <div>
+      <MarkersMap onMarkerPositionChange={handleMarkerPositionChange} />
+      {markerPosition && (
+        <p>
+          Marker Position: {markerPosition[0]}, {markerPosition[1]}
+        </p>
+      )}
+    </div>
+  );
+
 }
 
 export default Index;
