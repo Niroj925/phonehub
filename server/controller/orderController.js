@@ -30,6 +30,23 @@ async  getOrderByUsrId(req, res) {
     return res.json(err);
   }
 }
+async  getOrderByNumber(req, res) {
+  const customerNumber = req.body.customerNumber;
+
+  console.log('customerno.:'+customerNumber);
+  try {
+    const response = await orderModel.find({ customerContact: customerNumber })
+    .populate('orderItems.product','name brand')
+    .populate('customerId','name email');
+    if (response.length === 0) {
+      return res.json([]);
+    } else {
+      return res.status(200).json(response);
+    }
+  } catch (err) {
+    return res.json(err);
+  }
+}
 
 async updateDeliver(req,res) {
   const orderId=req.body.orderId;
