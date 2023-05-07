@@ -15,10 +15,12 @@ const Order = () => {
   const [number, setNumber] = useState("");
   const [orders,setOrders]=useState(null);
   const [selectedOrder,setSelectedOrder]=useState(null);
-  const [showLocation,setShowLocation]=useState(false)
+  const [showLocation,setShowLocation]=useState(false);
+  const[showPath,setShowPath]=useState(false);
   const [markerPosition, setMarkerPosition] = useState(null);
   const [locationName,setLocationName]=useState('');
   const [destinationCoordinates,setDestinationCoordinates] = useState([27.3256, 85.1245]);
+  const [myLocation,setMyLocation]=useState([27.3256, 85.1245])
 
   const data={
     "customerNumber":number,
@@ -60,7 +62,9 @@ const Order = () => {
   useEffect(() => {
     if (selectedOrder) {
       const { lat, lon } = selectedOrder.shippingAddress.location;
+      (lat==!null)?setDestinationCoordinates([lat, lon]):setDestinationCoordinates([0,0]);
       setDestinationCoordinates([lat, lon]);
+      
       console.log('destinationCoordinates')
       console.log(destinationCoordinates)
       setShowLocation(true);
@@ -147,8 +151,11 @@ const Order = () => {
 
         {
             showLocation&&(
-            <>
-            <RiCloseLine onClick={()=>setShowLocation(false)} size={30}/>
+            <Card>
+            <div style={{display:'flex',justifyContent:'end'}}>
+              <RiCloseLine onClick={()=>setShowLocation(false)} size={30}/>
+            </div>
+            
             <MarkersMap 
             onMarkerPositionChange={handleMarkerPositionChange} 
             destinationCoordinates={destinationCoordinates}
@@ -160,8 +167,21 @@ const Order = () => {
           Your Address:{locationName}
         </p>
       )}
+
+      <div>
+      <Button onClick={() => {
+        // console.log('marker my position:')
+        // console.log(markerPosition)
+        // console.log('destination position:')
+        // console.log(destinationCoordinates)
+    const url = `https://www.google.com/maps/dir/${markerPosition[0]},${markerPosition[1]}/${destinationCoordinates[0]},+${destinationCoordinates[1]}`;
+       window.open(url, "_blank");
+  }}>
+    Get path
+  </Button>
+      </div>
          
-            </>
+            </Card>
             )
         }
     

@@ -11,7 +11,7 @@ import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 const MyMap = ({ onMarkerPositionChange, destinationCoordinates }) => {
   console.log('destinaion on map')
   console.log(destinationCoordinates);
-  const position = destinationCoordinates?destinationCoordinates:[27.6785, 85.4232]; // specify latitude and longitude coordinates
+  const position = destinationCoordinates?destinationCoordinates:[0, 0]; // specify latitude and longitude coordinates
   const [markerPosition, setMarkerPosition] = useState(position);
 
   // create a custom marker icon
@@ -70,7 +70,7 @@ const MyMap = ({ onMarkerPositionChange, destinationCoordinates }) => {
         </Marker>
         )}    
            {destinationCoordinates && (
-          <Marker position={destinationCoordinates} icon={customMarkerIcon} style={{color:'red'}}>
+          <Marker position={destinationCoordinates} icon={customMarkerIcon} style={{filter: "hue-rotate(0deg)"}}>
             <Popup>
               <p>Customer destination Location</p>
           </Popup>
