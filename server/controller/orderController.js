@@ -1,7 +1,11 @@
 import orderModel from '../model/orderModel.js';
 import "dotenv/config";
+import sendMail from '../service/sendMail.js';
+
+  let previousOtpCode='';
 
 export default class ProductController{
+
     async addOrder(req,res){
           try {
             const response = await orderModel.create({...req.body});
@@ -33,7 +37,6 @@ async  getOrderByUsrId(req, res) {
 async  getOrderByNumber(req, res) {
   const customerNumber = req.body.customerNumber;
 
-  console.log('customerno.:'+customerNumber);
   try {
     const response = await orderModel.find({ customerContact: customerNumber })
     .populate('orderItems.product','name brand')
@@ -61,9 +64,16 @@ async updateDeliver(req,res) {
   }
 }
 
+
+
 async cancelOrder(req,res){
-  const id=req.body.orderId
-  try {
+  const id=req.body.orderId;
+  const email=req.body.customerEmail;
+
+
+  if(req.body.otp){
+    if (Number(previousOtpCode)===Number(req.body.otp)) {
+      try {
     const response = await orderModel.findByIdAndDelete(id);
     if (response === null) {
       return res.json([]);
@@ -73,6 +83,21 @@ async cancelOrder(req,res){
   } catch (err) {
     return res.json(err);
   }
+}else{
+  res.status(403).json({message:'Invalid OTP'})
+}
+  }else{
+
+     // Generate a new OTP code and store it in the previousOtpCode variable
+     previousOtpCode = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+     const msg = `Your OTP code to cancel order: ${previousOtpCode}. Don't share this code. Thank you.`;
+     const subject='Cancel Order';
+    sendMail(email,subject, msg);
+     console.log(email);
+     res.status(200).json({ message:`OTP sent to your mail ${email}`});
+  }
+
+ 
 }
 }
 

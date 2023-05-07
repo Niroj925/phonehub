@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { Form, Button ,Container,Row,Card} from "react-bootstrap";
+import {Modal, Form, Button ,Container,Row,Card} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import api from '../../pages/api/api.js';
 import dynamic from 'next/dynamic';
@@ -18,9 +18,11 @@ const Order = () => {
   const [showLocation,setShowLocation]=useState(false);
   const[showPath,setShowPath]=useState(false);
   const [markerPosition, setMarkerPosition] = useState(null);
-  const [locationName,setLocationName]=useState('');
+  const [locationName,setLocationName]=useState();
   const [destinationCoordinates,setDestinationCoordinates] = useState([27.3256, 85.1245]);
   const [myLocation,setMyLocation]=useState([27.3256, 85.1245])
+  const [otp, setOtp] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const data={
     "customerNumber":number,
@@ -74,6 +76,9 @@ const Order = () => {
 
   const cancelOrder=(order)=>{
     setSelectedOrder(order);
+    
+
+
     console.log(selectedOrder);
 
   }
@@ -94,6 +99,57 @@ const Order = () => {
       });
     }
 
+    const handleOtpChange = (event) => {
+      setOtp(event.target.value);
+    };
+  
+    const handleCancelOrder = async() => {
+      // Perform validation and cancel order logic here
+      if (otp) {
+        // Call the cancel order API with the OTP
+        let orderDetail={
+          "orderId":selectedOrder._id,
+          "customerEmail":selectedOrder.customerEmail,
+          "otp":otp
+        }
+        try{
+          const response=await api.post('/order/cancel',orderDetail);       
+          console.log(response.data);
+          if(response.data){
+            setOtp('');
+          }
+      }catch(err){
+          console.log(err)
+      }
+        // console.log('Cancel order with OTP:', otp);
+        setShowModal(false); // Close the modal after processing
+      }
+    };
+  
+    const handleCloseModal = () => {
+      setOtp('');
+      setShowModal(false);
+    };
+  
+    const handleShowModal =async (order) => {
+      setSelectedOrder(order);
+
+      let orderDetail={
+        "orderId":order._id,
+        "customerEmail":order.customerEmail,
+      }
+      
+      try{
+        const response=await api.post('/order/cancel',orderDetail );       
+        console.log(response.data);
+    }catch(err){
+        console.log(err)
+    }
+      setShowLocation(false);
+      setShowModal(true);
+    };
+  
+  
   
   return (
     <Container>
@@ -130,7 +186,12 @@ const Order = () => {
                    <Card.Text>Created At: {new Date(order.updatedAt).toLocaleDateString()}</Card.Text>
                    <div style={{display:'flex',justifyContent:'space-around'}}>
                     <Button onClick={()=>handleClick(order)}>Track Location</Button>
-                   <Button onClick={()=>cancelOrder(order)}>Cancel Order</Button>
+
+                   {/* <Button onClick={()=>cancelOrder(order)}>Cancel Order</Button> */}
+                   <Button variant="primary" onClick={()=>handleShowModal(order)}>
+                  Cancel Order
+                       </Button>
+
                    </div>
                   
                  </Card.Body>
@@ -186,6 +247,31 @@ const Order = () => {
         }
     
     </Row>
+
+
+    <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>OTP Validation</Modal.Title>
+          <Modal.Text>OTP has been sent to your email</Modal.Text>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="otpInput">
+              <Form.Label>OTP</Form.Label>
+              <Form.Control type="number" value={otp} onChange={handleOtpChange} placeholder="Enter OTP" />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleCancelOrder}>
+            Confirm
+          </Button>
+
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
