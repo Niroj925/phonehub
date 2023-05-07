@@ -2,22 +2,23 @@ import React, { useState,useEffect } from "react";
 import { Form, Button ,Container,Row,Card} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import api from '../../pages/api/api.js';
-// import TrackLocation from '../../component/trackLocation.js';
-// import dynamic from 'next/dynamic';
-// const TrackLocation = dynamic(() => import('../../component/trackLocation.js'), {
-//   ssr: false,
-// });
+import dynamic from 'next/dynamic';
+import { RiCloseLine } from 'react-icons/ri';
+import axios from "axios";
+
+const MarkersMap = dynamic(() => import('../../component/MyMap.js'), {
+  ssr: false,
+});
+
 
 const Order = () => {
   const [number, setNumber] = useState("");
   const [orders,setOrders]=useState(null);
   const [selectedOrder,setSelectedOrder]=useState(null);
   const [showLocation,setShowLocation]=useState(false)
-  
-  const sourceLatitude = 27.68762; // Replace with the actual source latitude
-  const sourceLongitude = 85.33738; // Replace with the actual source longitude
-  let destinationLatitude = 27.123; // Replace with the actual destination latitude
-  let destinationLongitude = 85.654;
+  const [markerPosition, setMarkerPosition] = useState(null);
+  const [locationName,setLocationName]=useState('');
+  const [destinationCoordinates,setDestinationCoordinates] = useState([27.3256, 85.1245]);
 
   const data={
     "customerNumber":number,
@@ -35,8 +36,8 @@ const Order = () => {
 
   useEffect(()=>{
     getOrder();
-    console.log(orders);
-  },[number.length==10])
+    console.log(orders); 
+},[number.length==10])
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -50,16 +51,46 @@ const Order = () => {
     setSelectedOrder(order);
     console.log(selectedOrder);
     console.log(order.shippingAddress.location)
-     destinationLatitude = order.shippingAddress.location.lat; // Replace with the actual destination latitude
-     destinationLongitude = order.shippingAddress.location.lon;
+    //  destinationLatitude = order.shippingAddress.location.lat; // Replace with the actual destination latitude
+    //  destinationLongitude = order.shippingAddress.location.lon;
     setShowLocation(true);
 
   }
+
+  useEffect(() => {
+    if (selectedOrder) {
+      const { lat, lon } = selectedOrder.shippingAddress.location;
+      setDestinationCoordinates([lat, lon]);
+      console.log('destinationCoordinates')
+      console.log(destinationCoordinates)
+      setShowLocation(true);
+    }
+
+  }, [selectedOrder]);
+
   const cancelOrder=(order)=>{
     setSelectedOrder(order);
     console.log(selectedOrder);
 
   }
+
+  const handleMarkerPositionChange =  (position) => {
+    setMarkerPosition(position); 
+      axios
+      .get(`https://nominatim.openstreetmap.org/reverse?lat=${position[0]}&lon=${position[1]}&format=json`)
+      .then((response) => {
+        const { display_name } = response.data;
+        setLocationName(display_name);
+       // set the location value 
+ 
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+
+  
   return (
     <Container>
         <h4>Enter Customer Contact Number to track order</h4>
@@ -113,27 +144,23 @@ const Order = () => {
     }
     </Row>
     <Row>
+
         {
             showLocation&&(
-            //     <TrackLocation
-            //     sourceLatitude={sourceLatitude}
-            //     sourceLongitude={sourceLongitude}
-            //     destinationLatitude={destinationLatitude}
-            //     destinationLongitude={destinationLongitude}
-            //   />
             <>
-               <Card>
-      <Card.Body>
-        <div className="embed-responsive embed-responsive-16by9">
-          <iframe
-            className="embed-responsive-item"
-            src="https://www.google.com/maps/dir/'27.68762,85.33738'/'27.68556,85.36653'/@27.6786893,85.3344461,14z/data=!3m1!4b1!4m9!4m8!1m3!2m2!1d85.33738!2d27.68762!1m3!2m2!1d85.36653!2d27.68556"
-            title="Embedded Site"
-            allowFullScreen
-          ></iframe>
-        </div>
-      </Card.Body>
-    </Card>
+            <RiCloseLine onClick={()=>setShowLocation(false)} size={30}/>
+            <MarkersMap 
+            onMarkerPositionChange={handleMarkerPositionChange} 
+            destinationCoordinates={destinationCoordinates}
+            />
+{/* sourceCoordinates,destinationCoordinates */}
+            {markerPosition && (
+        <p>
+          {/* Marker Position: {markerPosition[0]}, {markerPosition[1]} */}
+          Your Address:{locationName}
+        </p>
+      )}
+         
             </>
             )
         }
