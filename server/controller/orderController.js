@@ -1,6 +1,7 @@
 import orderModel from '../model/orderModel.js';
 import "dotenv/config";
-import sendMail from '../service/sendMail.js';
+import {sendMail,sendMailFile} from '../service/sendMail.js';
+import createPDF from '../service/makepdf.js';
 
   let previousOtpCode='';
 
@@ -51,18 +52,37 @@ async  getOrderByNumber(req, res) {
   }
 }
 
-async updateDeliver(req,res) {
-  const orderId=req.body.orderId;
+async updateDeliver(req, res) {
+  const orderId = req.body.orderId;
   try {
-    const response = await orderModel.updateOne(
-      { _id: orderId },
-      { isDelivered: true }
-    );
-   return res.status(200).json(response);
+    const order = await orderModel.findById(orderId);
+    
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    order.isDelivered = true;
+
+    const updatedOrder = await order.save();
+    console.log(updatedOrder);
+    if (updatedOrder) {
+      const pdfFilePath = createPDF(updatedOrder);
+      console.log(pdfFilePath);
+      const email=updatedOrder.customerEmail;
+      const subject="Order bill";
+      const msg="Dear Customer Thank for purchasing this item please leave a review";
+      //send mail with pdf bile bill
+      sendMailFile(email,subject,msg,pdfFilePath)
+      return res.status(200).json({ success: true, pdfFilePath });
+    } else {
+      return res.status(500).json({ error: 'Failed to update order' });
+    }
   } catch (err) {
-    return res.json(err);
+    console.log(err);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 }
+
 
 
 
