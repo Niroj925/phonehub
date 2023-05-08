@@ -3,7 +3,7 @@ import userReducer from '../slices/userSlice';
 import productReducer from '../slices/productslice';
 
 const rootReducer = combineReducers({
-    user:userReducer,
+  user:userReducer,
   product: productReducer,
   // add other reducers here
 });

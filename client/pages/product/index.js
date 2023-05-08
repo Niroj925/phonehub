@@ -137,7 +137,7 @@ function index() {
                />
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>
-                <Card.Text style={{fontWeight:'bold'}}>Price:{product.price}</Card.Text>
+                <Card.Text style={{fontWeight:'bold'}}>Rs.{product.price}</Card.Text>
                 <Button onClick={()=>buyNow(product)} >Buy Now</Button>
               </Card.Body>
               

@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from "react";
 import {Modal, Form, Button ,Container,Row,Card} from "react-bootstrap";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import api from '../../pages/api/api.js';
 import dynamic from 'next/dynamic';
@@ -11,18 +12,17 @@ const MarkersMap = dynamic(() => import('../../component/MyMap.js'), {
 });
 
 
-const Order = () => {
+const MyOrder = () => {
   const [number, setNumber] = useState("");
   const [orders,setOrders]=useState(null);
   const [selectedOrder,setSelectedOrder]=useState(null);
   const [showLocation,setShowLocation]=useState(false);
-  const[showPath,setShowPath]=useState(false);
   const [markerPosition, setMarkerPosition] = useState(null);
   const [locationName,setLocationName]=useState();
   const [destinationCoordinates,setDestinationCoordinates] = useState([27.3256, 85.1245]);
-  const [myLocation,setMyLocation]=useState([27.3256, 85.1245])
   const [otp, setOtp] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [fieldMsg,setFieldMsg]=useState('');
 
   const data={
     "customerNumber":number,
@@ -31,7 +31,11 @@ const Order = () => {
   const getOrder=async()=>{
     try{
         const response=await api.post('/order/getorder',data);
-        setOrders(response.data);
+
+        if(response.data){
+          setOrders(response.data);
+        }
+        
         // console.log(response.data);
     }catch(err){
         console.log(err)
@@ -39,9 +43,11 @@ const Order = () => {
   }
 
   useEffect(()=>{
-    getOrder();
-    console.log(orders); 
-},[number.length==10])
+    if(number.length==10){
+      getOrder();
+    }
+    // console.log(orders); 
+},[number])
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -55,8 +61,6 @@ const Order = () => {
     setSelectedOrder(order);
     console.log(selectedOrder);
     console.log(order.shippingAddress.location)
-    //  destinationLatitude = order.shippingAddress.location.lat; // Replace with the actual destination latitude
-    //  destinationLongitude = order.shippingAddress.location.lon;
     setShowLocation(true);
 
   }
@@ -64,7 +68,7 @@ const Order = () => {
   useEffect(() => {
     if (selectedOrder) {
       const { lat, lon } = selectedOrder.shippingAddress.location;
-      (lat==!null)?setDestinationCoordinates([lat, lon]):setDestinationCoordinates([0,0]);
+      setDestinationCoordinates([lat, lon]);
       setDestinationCoordinates([lat, lon]);
       
       console.log('destinationCoordinates')
@@ -74,15 +78,7 @@ const Order = () => {
 
   }, [selectedOrder]);
 
-  const cancelOrder=(order)=>{
-    setSelectedOrder(order);
-    
-
-
-    console.log(selectedOrder);
-
-  }
-
+ 
   const handleMarkerPositionChange =  (position) => {
     setMarkerPosition(position); 
       axios
@@ -134,7 +130,7 @@ const Order = () => {
     const handleShowModal =async (order) => {
       setSelectedOrder(order);
 
-      let orderDetail={
+      const orderDetail={
         "orderId":order._id,
         "customerEmail":order.customerEmail,
       }
@@ -148,11 +144,9 @@ const Order = () => {
       setShowLocation(false);
       setShowModal(true);
     };
-  
-  
-  
+
   return (
-    <Container>
+    <Container style={{marginTop:'10px'}}>
         <h4>Enter Customer Contact Number to track order</h4>
         <Row>
     <Form onSubmit={handleSubmit}>
@@ -161,9 +155,25 @@ const Order = () => {
           type="number"
           placeholder="Enter a number"
           value={number}
-          onChange={(e) => setNumber(e.target.value)}
+          onChange={(e) => {
+            const input = e.target.value;
+          if (
+              input.length <= 10 &&
+              input.startsWith("9") &&
+              (input.length < 2 || (input[1] === "8" || input[1] === "7"))
+            )
+            {
+              setFieldMsg('')
+              setNumber(e.target.value)
+            }else if(input.length<=10){
+              setFieldMsg('Invalid contact number')
+             }
+          }
+            
+            }
         />
       </Form.Group>
+      <p style={{color:'red'}}>{fieldMsg}</p>
       {/* <Button variant="primary" type="submit">
         Submit
       </Button> */}
@@ -181,15 +191,15 @@ const Order = () => {
                <Card key={order._id} className="mb-3">   
                     <Card.Body>
                    <Card.Title>{order.customerName}</Card.Title>
-                   <Card.Text>Order Id:{order._id}</Card.Text>
-                   <Card.Text>Order: {order.orderItems.product.name}</Card.Text>
+                   <Card.Text>MyOrder Id:{order._id}</Card.Text>
+                   <Card.Text>MyOrder: {order.orderItems.product.name}</Card.Text>
                    <Card.Text>Created At: {new Date(order.updatedAt).toLocaleDateString()}</Card.Text>
                    <div style={{display:'flex',justifyContent:'space-around'}}>
                     <Button onClick={()=>handleClick(order)}>Track Location</Button>
 
-                   {/* <Button onClick={()=>cancelOrder(order)}>Cancel Order</Button> */}
+                   {/* <Button onClick={()=>cancelOrder(order)}>Cancel MyOrder</Button> */}
                    <Button variant="primary" onClick={()=>handleShowModal(order)}>
-                  Cancel Order
+                  Cancel MyOrder
                        </Button>
 
                    </div>
@@ -212,7 +222,7 @@ const Order = () => {
 
         {
             showLocation&&(
-            <Card>
+            <Card style={{marginBottom:'15px'}}>
             <div style={{display:'flex',justifyContent:'end'}}>
               <RiCloseLine onClick={()=>setShowLocation(false)} size={30}/>
             </div>
@@ -229,7 +239,7 @@ const Order = () => {
         </p>
       )}
 
-      <div>
+      <div style={{display:'flex',justifyContent:'end',margin:'10px'}}>
       <Button onClick={() => {
         // console.log('marker my position:')
         // console.log(markerPosition)
@@ -247,18 +257,22 @@ const Order = () => {
         }
     
     </Row>
+   {
 
-
+    showModal&&(
     <Modal show={showModal} onHide={handleCloseModal}>
+   
         <Modal.Header closeButton>
           <Modal.Title>OTP Validation</Modal.Title>
-          <Modal.Text>OTP has been sent to your email</Modal.Text>
+          
         </Modal.Header>
+         
         <Modal.Body>
+          <p>OTP sent to {selectedOrder.customerEmail}</p>
           <Form>
             <Form.Group controlId="otpInput">
-              <Form.Label>OTP</Form.Label>
-              <Form.Control type="number" value={otp} onChange={handleOtpChange} placeholder="Enter OTP" />
+              {/* <Form.Label>OTP</Form.Label> */}
+              <Form.Control type="text" value={otp} onChange={handleOtpChange} placeholder="Enter OTP" />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -272,8 +286,10 @@ const Order = () => {
 
         </Modal.Footer>
       </Modal>
+    )
+}
     </Container>
   );
 };
 
-export default Order;
+export default MyOrder;

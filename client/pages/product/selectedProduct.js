@@ -14,12 +14,6 @@ function SelectedProduct({ product }) {
   }
 
   return (
-    // <div>
-    //   <p>Selected Product ID: {id}</p>
-    //   <p>Product Name: {product.name}</p>
-    //   <p>Product Brand: {product.brand}</p>
-    //   <p>Product Price: {product.price}</p>
-    // </div>
     <Container>
         <Row>
         <Col key={product._id} className={styles.selectedProductCard}  xs={12} sm={9} md={9} >

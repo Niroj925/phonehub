@@ -3,7 +3,7 @@ import api from '@/pages/api/api.js'
 import { useRouter } from 'next/router';
 import { Container,Stack, Form, Row, Col, Card ,Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from '../../styles/ProductCard.module.css';
+// import styles from '../../styles/ProductCard.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -24,6 +24,7 @@ const [formData, setFormData] = useState({});
 const [showMap,setShowMap]=useState(false);
 const [markerPosition, setMarkerPosition] = useState(null);
 const [locationName,setLocationName]=useState('')
+const [fieldMsg,setFieldMsg]=useState('');
 const router = useRouter();
 const { userid } = router.query;
 
@@ -159,22 +160,36 @@ useEffect(() => {
     <Container>
        
         <Row>
-        <Col key={product._id} className={styles.customerCard}  xs={12} sm={9} md={9} >
+        {/* <Col key={product._id} className={styles.customerCard}  xs={12} sm={9} md={9} > */}
              <h3>Fill Your Details</h3>
             <Card >
               
               <Form onSubmit={handleSubmit} style={{padding:"10px"}}>
 
-  <Form.Group controlId="customerContact">
-    <Form.Label>Customer Contact</Form.Label>
-    <Form.Control
-      type="number"
-      value={formData.customerContact}
-      onChange={(e) =>
-        setFormData({ ...formData, customerContact: e.target.value })
+              <Form.Group controlId="customerContact">
+  <Form.Label>Customer Contact</Form.Label>
+  <Form.Control
+    type="number"
+    value={formData.customerContact}
+    maxLength={10}
+    onChange={(e) => {
+      const input = e.target.value;
+      // if (input.length <= 10 && (input[1]&&( input.startsWith("9") && (input[1] === "8" || input[1] === "7")))) 
+      if (
+        input.length <= 10 &&
+        input.startsWith("9") &&
+        (input.length < 2 || (input[1] === "8" || input[1] === "7"))
+      ) 
+      {
+        setFieldMsg('');
+        setFormData({ ...formData, customerContact: input });
+      }else if(input.length<=10){
+       setFieldMsg('Invalid contact number')
       }
-    />
-  </Form.Group>
+    }}
+  />
+</Form.Group>
+  <p style={{color:'red'}}>{fieldMsg}</p>
   {
     !showMap?(
       <Button onClick={()=>setShowMap(true)} style={{marginTop:'10px'}}>Set Location</Button>
@@ -224,7 +239,7 @@ useEffect(() => {
  </Form>
              
             </Card>
-          </Col>
+          {/* </Col> */}
          </Row>
          <ToastContainer/>
         </Container>
