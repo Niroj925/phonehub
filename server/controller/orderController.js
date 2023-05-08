@@ -55,7 +55,7 @@ async  getOrderByNumber(req, res) {
 async updateDeliver(req, res) {
   const orderId = req.body.orderId;
   try {
-    const order = await orderModel.findById(orderId);
+    const order = await orderModel.findById(orderId).populate('orderItems.product','name brand');
     
     if (!order) {
       return res.status(404).json({ error: 'Order not found' });
@@ -67,10 +67,11 @@ async updateDeliver(req, res) {
     console.log(updatedOrder);
     if (updatedOrder) {
       const pdfFilePath = createPDF(updatedOrder);
-      console.log(pdfFilePath);
+      const productId=updatedOrder.orderItems.product._id;
+      const customerId=updatedOrder.customerId;
       const email=updatedOrder.customerEmail;
       const subject="Order bill";
-      const msg="Dear Customer Thank for purchasing this item please leave a review";
+      const msg=`Dear Customer Thank for purchasing this item please leave a review. http://localhost:3000/review?productid=${productId}&customerid=${customerId} `;
       //send mail with pdf bile bill
       sendMailFile(email,subject,msg,pdfFilePath)
       return res.status(200).json({ success: true, pdfFilePath });

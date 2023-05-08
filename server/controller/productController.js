@@ -54,6 +54,7 @@ export default class ProductController{
   async getProductById(req, res) {
     try {
       const productId = req.body.productId;
+      console.log('productid:'+productId)
       const product = await productModel.findById(productId);
       if (!product) {
         return res.status(404).json({ message: 'Product not found' });
