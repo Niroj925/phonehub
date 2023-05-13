@@ -45,10 +45,12 @@
 
   .filterBar{
     margin-top: 10px;
+    margin-bottom: 15px;
     border: 2px solid #fff;
     transition: all 0.3s ease-in-out;
     background-color: #e6f0f0fd;
     padding: 15px;
+    padding-bottom:20px;
   }
 
   .customerCard{

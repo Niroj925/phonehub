@@ -4,7 +4,8 @@
 
 #btnid{
     background-color: aquamarine;
-    border-radius: 25px;  
+    border: none;
+    border-radius: 25px; 
     color: black;
     font-weight: bold;
     padding-right: 20px;

@@ -1,11 +1,12 @@
 import React, { useState,useEffect } from "react";
 import {Modal, Form, Button ,Container,Row,Card} from "react-bootstrap";
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import api from '../../pages/api/api.js';
 import dynamic from 'next/dynamic';
 import { RiCloseLine } from 'react-icons/ri';
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MarkersMap = dynamic(() => import('../../component/MyMap.js'), {
   ssr: false,
@@ -23,7 +24,7 @@ const MyOrder = () => {
   const [otp, setOtp] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [fieldMsg,setFieldMsg]=useState('');
-
+  const [errMsg,setErrMsg]=useState('');
   const data={
     "customerNumber":number,
   }
@@ -96,7 +97,17 @@ const MyOrder = () => {
     }
 
     const handleOtpChange = (event) => {
-      setOtp(event.target.value);
+      const inputOtp = event.target.value;
+      const otpRegex = /^\d{0,4}$/;
+
+
+      if (otpRegex.test(inputOtp)) {
+        setErrMsg('')
+        setOtp(inputOtp);
+      }else{
+        setErrMsg('Invalid OTP')
+      }
+      // setOtp(event.target.value);
     };
   
     const handleCancelOrder = async() => {
@@ -113,12 +124,55 @@ const MyOrder = () => {
           console.log(response.data);
           if(response.data){
             setOtp('');
+            setShowModal(false); 
+          }
+          if(response.status===200){
+            toast.success('Your order has been cancelled', {
+              position: "bottom-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              });
           }
       }catch(err){
           console.log(err)
+          console.log('status code:'+err.response.status);
+          setOtp('')
+
+          if(err.response.status===403){
+          toast.error('Invalid OTP', {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+          }else if(err.response.status===429){
+            toast.error('Too many request ', {
+              position: "bottom-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              });
+              setTimeout(()=>{
+                setShowModal(false)
+              },3000)
+            }
+          
       }
         // console.log('Cancel order with OTP:', otp);
-        setShowModal(false); // Close the modal after processing
+        // setShowModal(false); // Close the modal after processing
       }
     };
   
@@ -272,7 +326,15 @@ const MyOrder = () => {
           <Form>
             <Form.Group controlId="otpInput">
               {/* <Form.Label>OTP</Form.Label> */}
-              <Form.Control type="text" value={otp} onChange={handleOtpChange} placeholder="Enter OTP" />
+              <Form.Control
+               type="number"
+                value={otp} 
+                onChange={handleOtpChange} 
+                placeholder="Enter OTP"
+                maxLength={4}
+                
+                />
+                <Form.Text style={{color:'red'}}>{errMsg}</Form.Text>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -288,6 +350,7 @@ const MyOrder = () => {
       </Modal>
     )
 }
+<ToastContainer/>
     </Container>
   );
 };

@@ -27,15 +27,25 @@ function Homepage() {
          <Button id={styles.btnid} className={styles.btn} onClick={() => {
             window.location.href = '/product';
           }}
-          // style={{
-          //   backgroundColor:'aquamarine',
-          //   borderRadius:'25px',
-          //   color:'black',
-          //   fontWeight:'bold',
-     
-          // }}
           >Shop Now</Button>
+
+          
+         
         </div>
+        <div style={{ position: 'absolute', top: '60%', left: '10%' }}>
+         <h3 style={{color:'white'}} >My orders</h3>
+           <Row >
+            <Col style={{display:'flex'}}>
+             <Button
+             id={styles.btnid} className={styles.btn} onClick={() => {
+              window.location.href = '/order';
+            }}
+             >My Order</Button>
+            </Col>
+           
+            </Row> 
+        </div>
+      
       </div>
       <Footer/>
     </Container>
