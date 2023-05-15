@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { Container,Stack, Form, Row, Col, Card ,Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../../styles/ProductCard.module.css';
+import { RiCloseLine } from 'react-icons/ri';
 
 function SelectedProduct({ product }) {
     const router=useRouter();
@@ -14,12 +15,13 @@ function SelectedProduct({ product }) {
   }
 
   return (
-    <Container>
-        <Row>
+    <Container >
+        <Row style={{justifyItems:'center',justifyContent:'center',alignItems:'center'}}>
         <Col key={product._id} className={styles.selectedProductCard}  xs={12} sm={9} md={9} >
             <Card >
               <div style={{display:'flex',justifyContent:"end"}}>
-                <Button onClick={()=>handleClose()} >Close</Button>
+                {/* <Button onClick={()=>handleClose()} >Close</Button> */}
+                <RiCloseLine onClick={()=>handleClose()} size={30}/>
               </div>
               
               <Card.Img variant="top" src={`http://localhost:8080/${product.image}`} className={styles.selectedCardImage}/>

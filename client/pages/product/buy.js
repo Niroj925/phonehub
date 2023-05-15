@@ -10,6 +10,7 @@ import axios from 'axios';
 // import Map from '../../component/map.js';
 import dynamic from 'next/dynamic';
 import { RiCloseLine } from 'react-icons/ri';
+import Payment from '../../component/payment';
 
 
 const MarkersMap = dynamic(() => import('../../component/MyMap.js'), {
@@ -22,6 +23,7 @@ function SelectedProduct({customer }) {
   const [product, setProduct] = useState({});
 const [formData, setFormData] = useState({});
 const [showMap,setShowMap]=useState(false);
+const [showPayment,setShowPayment]=useState(false);
 const [markerPosition, setMarkerPosition] = useState(null);
 const [locationName,setLocationName]=useState('')
 const [fieldMsg,setFieldMsg]=useState('');
@@ -210,10 +212,13 @@ useEffect(() => {
     )
   }
    {markerPosition && (
+    <>
         <p>
           {/* Marker Position: {markerPosition[0]}, {markerPosition[1]} */}
           Your Address:{locationName}
         </p>
+         <Payment/>
+         </>
       )}
 
   {/* <Form.Group controlId="shippingAddress.address">
@@ -231,6 +236,15 @@ useEffect(() => {
         })
     }/>
  </Form.Group> */}
+
+{/* <Button onClick={()=>setShowPayment(true)}>Pay Now</Button> */}
+{/* <br/>
+{
+      showPayment&&(
+        <Payment/>
+      )
+    } */}
+
  <div style={{display:'flex',justifyContent:"space-between"}}>
             <Button type='submit' style={{margin:"10px"}}>Submit</Button>
              <Button onClick={()=>handleClose()} style={{margin:"10px"}} >Cancel</Button>
@@ -240,6 +254,8 @@ useEffect(() => {
              
             </Card>
           {/* </Col> */}
+
+          
          </Row>
          <ToastContainer/>
         </Container>

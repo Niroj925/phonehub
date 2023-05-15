@@ -5,10 +5,13 @@ import { Container,Stack, Form, Row, Col, Card ,Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../../styles/ProductCard.module.css';
 import GoogleDialogBox from '@/component/diologuebox';
+import { FaHome } from 'react-icons/fa';
+import { RiCloseLine } from 'react-icons/ri';
 
 function index() {
     const [products,setProducts]=useState([])
     const [sortedProducts,setSortedProducts]=useState([])
+    const [productsReview,setProductsReview]=useState([])
     const [minPrice,setMinPrice]=useState()
     const [maxPrice,setMaxPrice]=useState()
     const [name,setName]=useState();
@@ -25,6 +28,7 @@ function index() {
               priceMin:minPrice,
               priceMax:maxPrice
       }
+      
     const getMyProducts=async (filterSearchData)=>{
      
     try {
@@ -37,9 +41,9 @@ function index() {
           }
         }
       );
-        console.log(response.data);
+        // console.log(response.data);
         setProducts(response.data);
-        console.log(products);
+     
       } catch (error) {
         // Handle error
         console.log(error)
@@ -47,8 +51,25 @@ function index() {
       }
     }
 
+    const getProductsReview=async ()=>{
+     
+      try {
+        const response = await api.post("review/get");
+          // console.log(response.data);
+          setProductsReview(response.data);
+         
+        } catch (error) {
+          // Handle error
+          console.log(error)
+          router.push('/');
+        }
+      }
+
     useEffect(()=>{
         getMyProducts(filterSearchData);
+        getProductsReview(); 
+        // console.log('review of products');
+        // console.log(productsReview)
     },[])
    
     const handleCardClick=(product)=>{
@@ -163,13 +184,36 @@ function index() {
       setShowDropdown(!showDropdown);
     };
 
+    const gotoHome=()=>{
+      router.push('/')
+    }
+
+// Function to calculate average rating
+const calculateAverageRating = (reviews) => {
+  console.log('review:'+reviews)
+  if (reviews.length === 0) {
+    return 0;
+  }
+
+  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+  const averageRating = totalRating / reviews.length;
+  return averageRating.toFixed(2);
+};
+
+
   return (
        <Container fluid >
         <Stack>
        <Row className={styles.filterBar}>
+       
        <Form>
        <Row xs={1} sm={2} md={3} >
-       <Col style={{marginBottom:'5px'}}>
+        <Col xs={1} sm={1} md={1} >
+        <FaHome size={30} onClick={()=>gotoHome()} style={{color:'blue',cursor:'pointer'}}/>
+        </Col>
+        
+       <Col style={{marginBottom:'5px'}} xs={6} sm={4} md={3} lg={3} >
+         
           <Form.Control 
           value={name}
           onChange={(e)=>setName(e.target.value) }
@@ -177,7 +221,7 @@ function index() {
            />
         </Col>
         
-        <Col style={{marginBottom:'5px'}}>
+        <Col style={{marginBottom:'5px'}} xs={12} sm={10} md={5} lg={5} >
         <div style={{display:'flex',justifyContent:'space-between'}}>
           <Form.Control 
           value={minPrice}
@@ -239,7 +283,16 @@ function index() {
          <h2>Available products</h2>
          <hr/>
             <Row xs={1} sm={2} md={3}>
-        {(sortedProducts.length>0)?(sortedProducts.map((product) => (
+        {(sortedProducts.length>0)?(sortedProducts.map((product) => {
+
+         
+
+          const productReviews = productsReview.map((review) => review.productId === product._id);
+          console.log('reviews:'+productReviews)
+          const averageRating = productReviews ? calculateAverageRating(productReviews.review) : 0;
+
+          
+          return(
           <Col key={product._id} className={styles.productCard}>
             <Card  >
               <Card.Img 
@@ -248,7 +301,15 @@ function index() {
                className={styles.cardImage}
                onClick={() => handleCardClick(product)}
                />
+                 
               <Card.Body>
+              {productReviews.length > 0 && (
+            <div>
+              <Card.Text>
+                Average Rating: {averageRating}
+              </Card.Text>
+            </div>
+          )}
                 <Card.Title>{product.name}</Card.Title>
                 <Card.Text style={{fontWeight:'bold'}}>Rs.{product.price}</Card.Text>
                 <Button onClick={()=>buyNow(product)} >Buy Now</Button>
@@ -257,8 +318,19 @@ function index() {
             </Card>
             {/* <Button onClick={()=>buyNow(product)} >Buy Now</Button> */}
           </Col>
-        ))):(
-          products.map((product) => (
+          )}
+        )
+        ):(
+          products.map((product) => {
+            // console.log(productsReview);
+            console.log('review of products');
+        console.log(productsReview)
+            const productReviews = productsReview.filter((review) => review.productId === product._id);
+               productReviews&&(console.log(productReviews))
+              const averageRating = productReviews ? calculateAverageRating(productReviews.review) : 0;
+
+          // console.log('review:'+productReviews)
+            return(
             <Col key={product._id} className={styles.productCard}>
               <Card  >
                 <Card.Img 
@@ -268,6 +340,13 @@ function index() {
                  onClick={() => handleCardClick(product)}
                  />
                 <Card.Body>
+                {productReviews.length > 0 && (
+            <div>
+              <Card.Text>
+                Average Rating: {averageRating}
+              </Card.Text>
+            </div>
+          )}
                   <Card.Title>{product.name}</Card.Title>
                   <Card.Text style={{fontWeight:'bold'}}>Rs.{product.price}</Card.Text>
                   <Button onClick={()=>buyNow(product)} >Buy Now</Button>
@@ -276,7 +355,8 @@ function index() {
               </Card>
               {/* <Button onClick={()=>buyNow(product)} >Buy Now</Button> */}
             </Col>
-          ))
+            )}
+            )
         )
       }
       </Row>

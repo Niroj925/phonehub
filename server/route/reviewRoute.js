@@ -6,10 +6,9 @@ const router =Router();
 
 const reviewController=new ReviewController();
 
-
 router.post('/add',reviewController.addReview);
 // router.put('/update',reviewController.updateReview);
 // router.post('/remove',reviewController.removeReview)
-// router.get('/get',reviewController.getReview);
+router.post('/get',reviewController.getReview);
 
 export default router;
