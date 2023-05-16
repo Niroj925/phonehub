@@ -13,7 +13,7 @@ export default class ProductController{
             if (response === null) {
               return res.json([]);
             } else {
-                  res.status(200).json({response})
+                  res.status(200).json(response)
             }
           } catch (err) {
             return res.json(err);
@@ -26,6 +26,22 @@ async  getOrderByUsrId(req, res) {
 
   try {
     const response = await orderModel.find({ user: userId }).populate('orderItems.product','name brand');
+    if (response.length === 0) {
+      return res.json([]);
+    } else {
+      return res.status(200).json(response);
+    }
+  } catch (err) {
+    return res.json(err);
+  }
+}
+
+async  getOrderById(req, res) {
+  const orderId = req.body.orderId;
+
+  try {
+    const response = await orderModel.findById(orderId )
+    .populate('orderItems.product','name brand image');
     if (response.length === 0) {
       return res.json([]);
     } else {
@@ -127,5 +143,30 @@ async cancelOrder(req,res){
 
  
 }
-}
 
+async makePayment(req,res){
+  const orderId = req.body.orderId;
+  try {
+    const order = await orderModel.findById(orderId)
+    .populate('user','email')
+    .populate('orderItems.product','name brand');
+
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    order.isPaid = true;
+    order.paymentMethod='Esewa'
+
+    const updatedOrder = await order.save();
+    console.log(updatedOrder);
+
+    if(updatedOrder){
+      return res.status(200).json({ success: true, updatedOrder});
+    }
+
+}catch(err){
+  console.log(err);
+}
+}
+}

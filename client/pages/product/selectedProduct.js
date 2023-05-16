@@ -33,7 +33,7 @@ function SelectedProduct({ product,productReview }) {
                 <RiCloseLine onClick={()=>handleClose()} size={30}/>
               </div>
               
-              <Card.Img variant="top" src={`http://localhost:8080/${product.image}`} className={styles.selectedCardImage}/>
+              <Card.Img variant="top" src={`https://ecommerceback-mklr.onrender.com/${product.image}`} className={styles.selectedCardImage}/>
               <hr/>
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>

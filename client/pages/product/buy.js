@@ -22,6 +22,7 @@ function SelectedProduct({customer }) {
     // console.log(customer)  
   const [product, setProduct] = useState({});
 const [formData, setFormData] = useState({});
+const [myOrder,setMyOrder]=useState(null);
 const [showMap,setShowMap]=useState(false);
 const [showPayment,setShowPayment]=useState(false);
 const [markerPosition, setMarkerPosition] = useState(null);
@@ -121,8 +122,12 @@ useEffect(() => {
           "order/add",
           formData,
         );
-          console.log(response.data);
+          // console.log(response.data);
+          // setMyOrder(response.data);
           if(response.data){
+            console.log(response.data);
+          setMyOrder(response.data);
+
             toast.success(`Thank You ${customer.name}, for Purchasing this item `, {
                 position: "bottom-right",
                 autoClose: 4000,
@@ -134,9 +139,9 @@ useEffect(() => {
                 theme: "light",
                 });
 
-                setTimeout(() => {
-                  router.push('/');
-                }, 4000)
+                // setTimeout(() => {
+                //   router.push('/');
+                // }, 4000)
           }
         } catch (error) {
           // Handle error
@@ -217,7 +222,7 @@ useEffect(() => {
           {/* Marker Position: {markerPosition[0]}, {markerPosition[1]} */}
           Your Address:{locationName}
         </p>
-         <Payment/>
+         
          </>
       )}
 
@@ -246,7 +251,16 @@ useEffect(() => {
     } */}
 
  <div style={{display:'flex',justifyContent:"space-between"}}>
-            <Button type='submit' style={{margin:"10px"}}>Submit</Button>
+          <div>
+             {
+              myOrder?(
+                <Payment formData={myOrder}/>
+              ):(
+                <Button type='submit' style={{margin:"10px"}}>Submit</Button>
+
+              )
+             }
+            </div>
              <Button onClick={()=>handleClose()} style={{margin:"10px"}} >Cancel</Button>
               </div>
 
@@ -267,7 +281,7 @@ export async function getServerSideProps({ query }) {
    console.log('userId:')
    console.log(userId)
 
-    const customerResponse = await axios.post(`http://localhost:8080/user/customer`, {
+    const customerResponse = await axios.post(`https://ecommerceback-mklr.onrender.com/user/customer`, {
       customerId:userId
     });
   

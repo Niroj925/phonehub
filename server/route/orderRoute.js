@@ -17,7 +17,9 @@ router.post('/add',orderController.addOrder);
 // router.put('/update',orderController.updateOrder);
 router.post('/cancel',limiter,orderController.cancelOrder)
 router.post('/get',orderController.getOrderByUsrId);
+router.post('/myorder',orderController.getOrderById);
 router.post('/getorder',orderController.getOrderByNumber);
+router.post('/makepayment',orderController.makePayment);
 router.put('/mkdelivertrue',orderController.updateDeliver);
 
 export default router;

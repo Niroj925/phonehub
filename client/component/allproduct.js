@@ -48,7 +48,7 @@ function myproduct() {
         {products.map((product) => (
           <Col key={product._id} className={styles.productCard}>
             <Card onClick={() => handleCardClick(product)} >
-              <Card.Img variant="top" src={`http://localhost:8080/${product.image}`} className={styles.cardImage} />
+              <Card.Img variant="top" src={`https://ecommerceback-mklr.onrender.com/${product.image}`} className={styles.cardImage} />
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>
                 <Card.Text style={{fontWeight:'bold'}}>Price:{product.price}</Card.Text>

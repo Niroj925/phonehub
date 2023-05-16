@@ -13,8 +13,8 @@
   }
 
   .selectedProductCard{
-    /* /* width: 200px; */
-    /* maxHeight: 200px;  */
+     /* width: 200px;  */
+     /* maxHeight: 200px;  */
     /* background-color: #333; */
     border: 2px solid #fff;
     transition: all 0.3s ease-in-out;

@@ -88,7 +88,7 @@ useEffect(() => {
                 <Col>
                   <Card.Body></Card.Body>
                   <Card.Img 
-                  variant="top" src={`http://localhost:8080/${product.image}`}
+                  variant="top" src={`https://ecommerceback-mklr.onrender.com/${product.image}`}
                    className={styles.selectedCardImage}
                    style={{ width: '200px', height: '200px' }}
                    />
