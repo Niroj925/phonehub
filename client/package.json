@@ -9,15 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@googlemaps/js-api-loader": "^1.15.1",
-    "@react-google-maps/api": "^2.18.1",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.5",
-    "google-map-react": "^2.2.0",
-    "google-maps-api-loader": "^1.1.1",
-    "google-maps-react": "^2.0.6",
     "jspdf": "^2.5.1",
     "leaflet": "^1.9.3",
     "leaflet-routing-machine": "^3.2.12",
@@ -26,7 +21,6 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
-    "react-google-maps": "^7.3.0",
     "react-icons": "^4.8.0",
     "react-leaflet": "^4.2.1",
     "react-rating-stars-component": "^2.2.0",
