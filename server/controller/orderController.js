@@ -91,7 +91,7 @@ async updateDeliver(req, res) {
       const customerId=updatedOrder.customerId;
       const email=updatedOrder.customerEmail;
       const subject="Order bill";
-      const msg=`Dear Customer Thank for purchasing this item please leave a review. http://localhost:3000/review?productid=${productId}&customerid=${customerId}.
+      const msg=`Dear Customer Thank for purchasing this item please leave a review. https://fonehub.netlify.app//review?productid=${productId}&customerid=${customerId}.
       If any queries mail us on ${updatedOrder.user.email}.
        `;
       //send mail with pdf bile bill

@@ -6,7 +6,7 @@ async googleauth(req, res) {
     const user = req.user;
     const userId = user._id;   // Retrieve the user's ID
    
-    const successRedirectUrl= `http://localhost:3000/product/buy?userid=${userId}`
+    const successRedirectUrl= `https://fonehub.netlify.app/product/buy?userid=${userId}`
     // Insert the user's ID into the URL
     res.redirect(successRedirectUrl);  // Redirect the user to the success URL
   }
