@@ -89,3 +89,6 @@
     border: 2px solid #fff;
     padding: 15px;
   }
+  .reviewbtn:hover{
+    color: blue;
+  }

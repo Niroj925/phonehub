@@ -7,6 +7,7 @@ import styles from '../../styles/ProductCard.module.css';
 import GoogleDialogBox from '@/component/diologuebox';
 import { FaHome } from 'react-icons/fa';
 import { RiCloseLine } from 'react-icons/ri';
+import RatingStars from '@/component/ratedStar';
 
 function index() {
     const [products,setProducts]=useState([])
@@ -20,6 +21,7 @@ function index() {
     const [selectedPid,setSelectedPid]=useState('');
     const [sortBy, setSortBy] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
+  
    const router=useRouter();
 
       const filterSearchData={
@@ -28,6 +30,9 @@ function index() {
               priceMin:minPrice,
               priceMax:maxPrice
       }
+      
+      const ratingsByProductId = {};
+
       
     const getMyProducts=async (filterSearchData)=>{
      
@@ -189,16 +194,16 @@ function index() {
     }
 
 // Function to calculate average rating
-const calculateAverageRating = (reviews) => {
-  console.log('review:'+reviews)
-  if (reviews.length === 0) {
-    return 0;
-  }
+// const calculateAverageRating = (reviews) => {
+//   console.log('review:'+reviews)
+//   if (reviews.length === 0) {
+//     return 0;
+//   }
 
-  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-  const averageRating = totalRating / reviews.length;
-  return averageRating.toFixed(2);
-};
+//   const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+//   const averageRating = totalRating /4;
+//   return averageRating.toFixed(2);
+// };
 
 
   return (
@@ -286,11 +291,23 @@ const calculateAverageRating = (reviews) => {
         {(sortedProducts.length>0)?(sortedProducts.map((product) => {
 
          
+productsReview.forEach(review => {
+  const { productId, review: reviewList } = review;
 
-          const productReviews = productsReview.map((review) => review.productId === product._id);
-          console.log('reviews:'+productReviews)
-          const averageRating = productReviews ? calculateAverageRating(productReviews.review) : 0;
+  if (productId === product._id) {
+    let averageRating = 0;
 
+    for (let i = 0; i < reviewList.length; i++) {
+      const { rating } = reviewList[i];
+      averageRating += rating;
+    }
+
+    averageRating /= reviewList.length;
+
+    ratingsByProductId[productId] = averageRating;
+  }
+});
+       
           
           return(
           <Col key={product._id} className={styles.productCard}>
@@ -303,33 +320,48 @@ const calculateAverageRating = (reviews) => {
                />
                  
               <Card.Body>
-              {productReviews.length > 0 && (
-            <div>
-              <Card.Text>
-                Average Rating: {averageRating}
-              </Card.Text>
-            </div>
-          )}
+              {product._id && ratingsByProductId.hasOwnProperty(product._id) && (
+                      <div style={{display:'flex' ,direction:'row'}}>
+                        <RatingStars totalStars={Math.round(ratingsByProductId[product._id])} />
+                    
+                        
+                      </div>
+                    )}
                 <Card.Title>{product.name}</Card.Title>
                 <Card.Text style={{fontWeight:'bold'}}>Rs.{product.price}</Card.Text>
                 <Button onClick={()=>buyNow(product)} >Buy Now</Button>
               </Card.Body>
               
             </Card>
-            {/* <Button onClick={()=>buyNow(product)} >Buy Now</Button> */}
+          
           </Col>
           )}
         )
         ):(
           products.map((product) => {
-            // console.log(productsReview);
-            console.log('review of products');
-        console.log(productsReview)
-            const productReviews = productsReview.filter((review) => review.productId === product._id);
-               productReviews&&(console.log(productReviews))
-              const averageRating = productReviews ? calculateAverageRating(productReviews.review) : 0;
+        //     console.log('review of products');
+        // console.log(productsReview)
 
-          // console.log('review:'+productReviews)
+        productsReview.forEach(review => {
+          const { productId, review: reviewList } = review;
+        
+          if (productId === product._id) {
+            let averageRating = 0;
+        
+            for (let i = 0; i < reviewList.length; i++) {
+              const { rating } = reviewList[i];
+              averageRating += rating;
+            }
+        
+            averageRating /= reviewList.length;
+        
+            ratingsByProductId[productId] = averageRating;
+          }
+        });
+        
+        // console.log('Ratings by Product ID:', ratingsByProductId);
+        
+
             return(
             <Col key={product._id} className={styles.productCard}>
               <Card  >
@@ -340,13 +372,15 @@ const calculateAverageRating = (reviews) => {
                  onClick={() => handleCardClick(product)}
                  />
                 <Card.Body>
-                {productReviews.length > 0 && (
-            <div>
-              <Card.Text>
-                Average Rating: {averageRating}
-              </Card.Text>
-            </div>
-          )}
+                {product._id && ratingsByProductId.hasOwnProperty(product._id) && (
+                      <div style={{display:'flex' ,direction:'row'}}>
+                        <RatingStars totalStars={Math.round(ratingsByProductId[product._id])} />
+                        {/* <Card.Text>
+                           {ratingsByProductId[product._id]}
+                        </Card.Text> */}
+                        
+                      </div>
+                    )}
                   <Card.Title>{product.name}</Card.Title>
                   <Card.Text style={{fontWeight:'bold'}}>Rs.{product.price}</Card.Text>
                   <Button onClick={()=>buyNow(product)} >Buy Now</Button>

@@ -65,6 +65,22 @@ export default class ReviewController{
         }
       }
 
+      async getReviewById(req, res) {
+        try {
+          const productId=req.body.productId
+          // const product = await reviewModel.findById({productId});
+          const productReviews = await reviewModel.find({ productId: productId })
+          .populate('review.customerId','name');
+
+          if (!productReviews) {
+            return res.status(404).json({ message: 'Product review not found' });
+          }
+          res.status(200).json(productReviews);
+        } catch (error) {
+          res.status(500).json({ message: error.message });
+        }
+      }
+
 
       
 }
