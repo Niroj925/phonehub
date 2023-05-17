@@ -12,7 +12,7 @@ const AddProductForm = (props) => {
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
+  // const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
   const [countInStock, setCountInStock] = useState('');
   const [image, setImage] = useState(null);
@@ -55,7 +55,7 @@ const AddProductForm = (props) => {
     formData.append('name', name);
     formData.append('brand', brand);
     formData.append('description', description);
-    formData.append('category', category);
+    // formData.append('category', category);
     formData.append('price', price);
     formData.append('countInStock', countInStock);
     // formData.append('features', features);
@@ -74,7 +74,7 @@ const AddProductForm = (props) => {
       });
       console.log(response.data);
       // Handle response
-      props.onClose();
+      // props.onClose();
       if(response.data){
         // router.push(`/mystore/profile?userid=${userid}`);
         toast.success('Product added successfully', {
@@ -87,8 +87,12 @@ const AddProductForm = (props) => {
           progress: undefined,
           theme: "light",
           });
-
-        props.onClose();
+        
+          setTimeout(()=>{
+            props.onClose();
+          },3000)
+          
+        
       }
 
     } catch (error) {
@@ -147,7 +151,7 @@ const AddProductForm = (props) => {
         />
       </Form.Group>
 
-      <Form.Group controlId="category">
+      {/* <Form.Group controlId="category">
         <Form.Label>Category</Form.Label>
         <Form.Control
           type="text"
@@ -156,7 +160,7 @@ const AddProductForm = (props) => {
           onChange={(e) => setCategory(e.target.value)}
           required
         />
-      </Form.Group>
+      </Form.Group> */}
 
       <Form.Group controlId="price">
         <Form.Label>Price</Form.Label>
