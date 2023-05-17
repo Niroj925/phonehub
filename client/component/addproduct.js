@@ -12,9 +12,9 @@ const AddProductForm = (props) => {
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
   const [description, setDescription] = useState('');
-  // const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
-  const [countInStock, setCountInStock] = useState('');
+  // const [countInStock, setCountInStock] = useState('');
   const [image, setImage] = useState(null);
   const [features, setFeatures] = useState([]);
   const [featureName,setFeatureName]=useState('');
