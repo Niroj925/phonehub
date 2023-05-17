@@ -55,9 +55,9 @@ const AddProductForm = (props) => {
     formData.append('name', name);
     formData.append('brand', brand);
     formData.append('description', description);
-    // formData.append('category', category);
+    formData.append('category', category);
     formData.append('price', price);
-    formData.append('countInStock', countInStock);
+    // formData.append('countInStock', countInStock);
     // formData.append('features', features);
     features.forEach((feature, index) => {
       formData.append(`features[${index}][name]`, feature.name);
@@ -151,7 +151,7 @@ const AddProductForm = (props) => {
         />
       </Form.Group>
 
-      {/* <Form.Group controlId="category">
+      <Form.Group controlId="category">
         <Form.Label>Category</Form.Label>
         <Form.Control
           type="text"
@@ -160,7 +160,7 @@ const AddProductForm = (props) => {
           onChange={(e) => setCategory(e.target.value)}
           required
         />
-      </Form.Group> */}
+      </Form.Group>
 
       <Form.Group controlId="price">
         <Form.Label>Price</Form.Label>
@@ -173,7 +173,7 @@ const AddProductForm = (props) => {
         />
       </Form.Group>
 
-      <Form.Group controlId="countInStock">
+      {/* <Form.Group controlId="countInStock">
         <Form.Label>Count In Stock</Form.Label>
         <Form.Control
           type="number"
@@ -182,7 +182,7 @@ const AddProductForm = (props) => {
           onChange={(e) => setCountInStock(e.target.value)}
           required
         />
-      </Form.Group>
+      </Form.Group> */}
 
       <Form.Group controlId="image">
         <Form.Label>Image</Form.Label>
