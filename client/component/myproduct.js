@@ -8,6 +8,8 @@ import {SelectedProduct} from '../store/slices/productslice.js';
 import { RiCloseLine } from 'react-icons/ri';
 import {FaTrash} from 'react-icons/fa'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import { SelectProduct } from '../store/slices/productslice.js';
 
 import { useDispatch } from 'react-redux'
@@ -19,29 +21,29 @@ function myproduct() {
     const router=useRouter();
     const dispatch=useDispatch();
     const { userid } = router.query
-    const[uid,setUid]=useState(userid);
 
     console.log(userid);
+    
+    const getMyProducts=async ()=>{
+      try {
+        const response = await api.get(`user/getproduct/${userid}`, {
+          headers: {
+           token: JSON.parse(localStorage.getItem("token")),               
+          },
+        });
+          console.log(response.data);
+          setProducts(response.data);
+          console.log(products);
+        } catch (error) {
+          // Handle error
+          console.log(error)
+          router.push('/');
+        }
+      }
 
     useEffect(()=>{
-    const getMyProducts=async ()=>{
-    try {
-      const response = await api.get(`user/getproduct/${userid}`, {
-        headers: {
-         token: JSON.parse(localStorage.getItem("token")),               
-        },
-      });
-        console.log(response.data);
-        setProducts(response.data);
-        console.log(products);
-      } catch (error) {
-        // Handle error
-        console.log(error)
-        router.push('/');
-      }
-    }
         getMyProducts();
-    },[userid,uid])
+    },[userid])
    
     const handleCardClick=(product)=>{
        setSelectedProduct(product);
@@ -71,7 +73,7 @@ function myproduct() {
             progress: undefined,
             theme: "light",
             });
-            setUid(userid);
+            getMyProducts();
         }
       }catch(err){
         console.log(err)
@@ -137,6 +139,7 @@ function myproduct() {
          
         )
        }
+       <ToastContainer/>
     </Container>
   )}
 
