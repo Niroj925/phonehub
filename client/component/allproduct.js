@@ -44,21 +44,25 @@ function myproduct() {
        <Container>
      {
        (!showSelectedProduct)?(
-            <Row xs={1} sm={2} md={3}>
-        {products.map((product) => (
-          <Col key={product._id} className={styles.productCard}>
-            <Card onClick={() => handleCardClick(product)} >
-              <Card.Img variant="top" src={`https://ecommerceback-mklr.onrender.com/${product.image}`}
-              style={{height:'250px',width:'200px'}}
-              className={styles.cardImage} />
-              <Card.Body>
-                <Card.Title>{product.name}</Card.Title>
-                <Card.Text style={{fontWeight:'bold'}}>Price:{product.price}</Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+        <Row>
+  {products.map((product) => (
+    <Col key={product._id} xs={12} sm={6} md={4} lg={3} xl={3} className={styles.productCard}>
+      <Card onClick={() => handleCardClick(product)}>
+        <Card.Img
+          variant="top"
+          src={`https://ecommerceback-mklr.onrender.com/${product.image}`}
+          className={styles.cardImage}
+        />
+        <Card.Body>
+          <Card.Title>{product.name}</Card.Title>
+          <Card.Text style={{ fontWeight: 'bold' }}>Price: {product.price}</Card.Text>
+        </Card.Body>
+      </Card>
+    </Col>
+  ))}
+</Row>
+
+      
        ):(
         
           <Col key={slectedProduct._id} className={styles.selectedProductCard}  xs={12} sm={9} md={9} >
