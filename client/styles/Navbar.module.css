@@ -63,6 +63,8 @@
     margin-bottom: 20px;
    
   }
+ 
+
   
   .loginButton {
     margin: 15px;
@@ -77,6 +79,24 @@
     font-weight: bold;
     text-decoration: none;
 
+  }
+
+  @media (max-width:402px){ /* Medium devices and above */
+    .loginButton {
+      margin: 10px;
+      margin-right: 5px;
+      padding: 10px 10px;
+      background-color: #687a75;
+      color: #333;;
+      /* background-color: #da6a0f; */
+      /* border: 1px solid #333; */
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      text-decoration: none;
+  
+    }
+  
   }
   
   .loginButton:hover {
