@@ -19,6 +19,8 @@ function myproduct() {
     const router=useRouter();
     const dispatch=useDispatch();
     const { userid } = router.query
+    const[uid,setUid]=useState(userid);
+
     console.log(userid);
 
     useEffect(()=>{
@@ -39,7 +41,7 @@ function myproduct() {
       }
     }
         getMyProducts();
-    },[userid])
+    },[userid,uid])
    
     const handleCardClick=(product)=>{
        setSelectedProduct(product);
@@ -69,6 +71,7 @@ function myproduct() {
             progress: undefined,
             theme: "light",
             });
+            setUid(userid);
         }
       }catch(err){
         console.log(err)

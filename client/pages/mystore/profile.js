@@ -10,7 +10,7 @@ import { useRouter } from 'next/router.js';
 
 function Profile() {
   const [showAddProduct, setShowAddProduct] = useState(false);
-  const [showMyProduct,setShowMyProduct]=useState(false);
+  const [showMyProduct,setShowMyProduct]=useState(true);
   const [showMyOrder,setShowMyOrder]=useState(false);
 
   const router=useRouter();
@@ -37,7 +37,7 @@ function Profile() {
 
   const handleClose=()=>{
     setShowAddProduct(false);
-    setShowMyProduct(false);
+    setShowMyProduct(true);
     setShowMyOrder(false);
   }
   
