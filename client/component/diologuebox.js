@@ -12,7 +12,7 @@ function GoogleDialog(props) {
     const googleAuth=async()=>{
     
         window.open(
-            `http://localhost:8080/user/auth/google`,
+            `https://ecommerceback-mklr.onrender.com/user/auth/google`,
             "_self"
         )
     }

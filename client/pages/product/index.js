@@ -213,11 +213,11 @@ function index() {
        
        <Form>
        <Row xs={1} sm={2} md={3} >
-        <Col xs={1} sm={1} md={1} >
+        <Col xs={1} sm={1} md={1} style={{marginRight:'20px'}} >
         <FaHome size={30} onClick={()=>gotoHome()} style={{color:'blue',cursor:'pointer'}}/>
         </Col>
         
-       <Col style={{marginBottom:'5px'}} xs={6} sm={4} md={3} lg={3} >
+       <Col style={{marginBottom:'5px'}} xs={8} sm={6} md={6} lg={3} >
          
           <Form.Control 
           value={name}
@@ -226,7 +226,7 @@ function index() {
            />
         </Col>
         
-        <Col style={{marginBottom:'5px'}} xs={12} sm={10} md={5} lg={5} >
+        <Col style={{marginBottom:'5px',marginLeft:'50px'}} xs={11} sm={8} md={6} lg={4} >
         <div style={{display:'flex',justifyContent:'space-between'}}>
           <Form.Control 
           value={minPrice}
@@ -245,7 +245,7 @@ function index() {
           </div>
         </Col>
         
-        <Col>
+        <Col style={{marginBottom:'5px'}} className={styles.sortbtn} xs={4} sm={3} md={3} lg={2}>
         <div style={{ position: 'relative' }}>
       <Button onClick={toggleDropdown}>Sort By</Button>
       {showDropdown && (

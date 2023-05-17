@@ -92,3 +92,9 @@
   .reviewbtn:hover{
     color: blue;
   }
+   
+  @media (max-width:550px){
+    .sortbtn{
+        margin-left: 50px;
+      }
+  }

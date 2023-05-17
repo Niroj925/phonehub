@@ -1,5 +1,6 @@
 .home{
     background-color: rgb(184, 221, 218);
+   
 }
 
 #btnid{
@@ -20,3 +21,18 @@
     padding-right: 20px;
     padding-left: 20px;
 }
+
+.bgImage {
+    width: 100%;
+    height: auto;
+  }
+
+@media (max-width: 525px) { /* Extra small devices */
+    .bgImage {
+      width: 100%;
+      height: 400px;
+      margin-bottom: 200px;
+      margin-top: 50px;
+    }
+  }
+

@@ -59,6 +59,9 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    background-color: #687a75;
+    margin-bottom: 20px;
+   
   }
   
   .loginButton {

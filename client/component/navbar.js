@@ -1,17 +1,6 @@
 import Link from 'next/link';
 import styles from '../styles/Navbar.module.css';
 
-function ContainerExample() {
-  return (
-    <Container>
-      <Row>
-        <Col>1 of 1</Col>
-      </Row>
-    </Container>
-  );
-}
-
-
 export default function Navbar() {
 
   return (

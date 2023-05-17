@@ -9,21 +9,20 @@ import Footer from './footer.js';
 function Homepage() {
   return (
     <Container className={styles.home} fluid>
-    <Navbar/>
-      {/* <Row >
-        <Navbar/>
-         <Image src='../image/m1.jpg'>
-          
-          
-          </Image>  
-      </Row> */}
+      <Row >
+        <Row style={{marginTop:'10px',marginLeft:'3px'}}>
+          <Navbar/>
+        </Row>
+        
+      </Row>
+       <Row>
         <div style={{ position: 'relative' }}>
-       
-        <Image src="../image/bg.png" alt="Image" style={{ width: '100%' }} />
+        <div style={{height:'auto'}}>
+        <Image src="../image/bgmob.jpg" alt="Image"  className={styles.bgImage} />
      
-      
-        <div style={{ position: 'absolute', top: '40%', left: '10%' }}>
-         <h3 style={{color:'white'}}>Buy the latest mobile phones</h3>
+        </div>
+        <div style={{ position: 'absolute', top: '30%', left: '10%' }}>
+         <h2 style={{color:'rgb(29, 56, 47)'}}>Buy the latest mobile phones</h2>
          <Button id={styles.btnid} className={styles.btn} onClick={() => {
             window.location.href = '/product';
           }}
@@ -32,9 +31,10 @@ function Homepage() {
           
          
         </div>
-        <div style={{ position: 'absolute', top: '60%', left: '10%',marginTop:'10px' }}>
-          <hr/>
-         {/* <h3 style={{color:'white'}} >My orders</h3> */}
+        <br/>
+        <div style={{ position: 'absolute', top: '50%', marginLeft: '70%',marginTop:'20px' }}>
+         
+         <h3 style={{color:'black'}} >My orders</h3>
            <Row >
             <Col style={{display:'flex'}}>
              <Button
@@ -48,7 +48,13 @@ function Homepage() {
         </div>
       
       </div>
-      <Footer/>
+      </Row>
+      <Row>
+        <Row style={{marginBottom:'10px',marginLeft:'3px'}}>
+           <Footer/>
+        </Row>
+      </Row>
+      
     </Container>
   );
 }

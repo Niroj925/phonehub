@@ -6,7 +6,8 @@
   .footerBox {
     width: '100%';
     margin-top: '10px';
-    background-color: rgb(227, 235, 235);
+    /* background-color: rgb(227, 235, 235); */
+    background-color: #687a75;
    
   }
   .center {
