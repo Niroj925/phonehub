@@ -23,7 +23,7 @@ function myproduct() {
     const { userid } = router.query
 
     console.log(userid);
-    
+
     const getMyProducts=async ()=>{
       try {
         const response = await api.get(`user/getproduct/${userid}`, {
@@ -73,12 +73,20 @@ function myproduct() {
             progress: undefined,
             theme: "light",
             });
+
             getMyProducts();
         }
       }catch(err){
         console.log(err)
       }
     }
+    const handleDelete = (id) => {
+      const confirmed = window.confirm('Do you want to remove this Item?');
+      if(confirmed){
+        deleteProduct(id);
+      }
+     
+    };
   return (
        <Container>
    
@@ -100,7 +108,7 @@ function myproduct() {
                 
                     <OverlayTrigger placement="top" overlay={renderTooltip('Remove this Item')}>
                         <span className="icon-wrapper">
-                          <FaTrash size={30} className={styles.deleteItem} onClick={()=>deleteProduct(product._id)} />
+                          <FaTrash size={30} className={styles.deleteItem} onClick={()=>handleDelete(product._id)} />
                         </span>
                       </OverlayTrigger>
                 </div>
