@@ -21,6 +21,7 @@ function Homepage() {
         <Image src="../image/bgmob.jpg" alt="Image"  className={styles.bgImage} />
      
         </div>
+
         <div style={{ position: 'absolute', top: '30%', left: '10%' }}>
          <h2 style={{color:'rgb(29, 56, 47)'}}>Buy the latest mobile phones</h2>
          <Button id={styles.btnid} className={styles.btn} onClick={() => {
@@ -32,7 +33,7 @@ function Homepage() {
          
         </div>
         <br/>
-        <div style={{ position: 'absolute', top: '50%', marginLeft: '70%',marginTop:'20px' }}>
+        <div style={{ position: 'absolute', top: '45%', marginLeft: '65%',marginTop:'20px' }}>
          
          <h3 style={{color:'black'}} >My orders</h3>
            <Row >

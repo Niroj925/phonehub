@@ -101,9 +101,10 @@ function downloadPDF(selectedOrder) {
 
   return (
     <Container fluid >
+      <h3>Your Items to Deliver </h3>
+        <p>Please deliver your order as soon as possible</p>
     <div style={{ overflowX: 'scroll', maxHeight: '400px' }}>
-        <h3>Your Items to Deliver </h3>
-        <p>Please deliver your ordered item as soon as possible</p>
+        
     <Table bordered hover sticky="top">  
       <thead>
         <tr>
