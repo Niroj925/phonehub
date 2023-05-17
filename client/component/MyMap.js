@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 // import 'leaflet-routing-machine.css'
+import style from '../styles/Map.module.css';
 
 const MyMap = ({ onMarkerPositionChange, destinationCoordinates }) => {
   console.log('destinaion on map')
@@ -50,12 +51,12 @@ const MyMap = ({ onMarkerPositionChange, destinationCoordinates }) => {
 
 
   return (
-    <Container fluid>
+    <Container fluid  >
       <MapContainer 
       center={position}
        zoom={11} 
-       style={{ height: "70vh", width: "80vh" }} 
-    
+      //  style={{overflowX: 'scroll', height: "70vh", width: "80vh" }} 
+       className={style.map}
        >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

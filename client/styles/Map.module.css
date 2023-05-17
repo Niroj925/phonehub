@@ -1,0 +1,11 @@
+.map{
+    height: 70vh;
+     width: 100%
+}
+@media (max-width:550px){
+    .map{
+        overflow-x: scroll;
+        height: 70vh;
+        max-width: 450px;
+      }
+  }
