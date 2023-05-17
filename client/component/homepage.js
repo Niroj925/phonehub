@@ -32,7 +32,8 @@ function Homepage() {
           
          
         </div>
-        <div style={{ position: 'absolute', top: '60%', left: '10%' }}>
+        <div style={{ position: 'absolute', top: '60%', left: '10%',marginTop:'10px' }}>
+          <hr/>
          {/* <h3 style={{color:'white'}} >My orders</h3> */}
            <Row >
             <Col style={{display:'flex'}}>
