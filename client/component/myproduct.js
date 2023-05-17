@@ -41,9 +41,11 @@ function myproduct() {
         }
       }
 
-    useEffect(()=>{
-        getMyProducts();
-    },[userid])
+      useEffect(() => {
+        if (userid) {
+          getMyProducts();
+        }
+      }, [userid]);
    
     const handleCardClick=(product)=>{
        setSelectedProduct(product);
