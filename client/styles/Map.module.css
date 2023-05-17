@@ -5,7 +5,7 @@
 @media (max-width:550px){
     .map{
         overflow-x: scroll;
-        height: 70vh;
+        height: 40vh;
         max-width: 450px;
       }
   }
