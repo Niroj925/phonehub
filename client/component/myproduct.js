@@ -109,7 +109,6 @@ function myproduct() {
           <Col key={slectedProduct._id} className={styles.selectedProductCard}  xs={12} sm={9} md={9} >
             <Card >
               <div style={{display:'flex',justifyContent:"end"}}>
-                {/* <Button onClick={()=>{setShowSelectedProduct(false)}} >Close</Button> */}
                 <RiCloseLine onClick={()=>{setShowSelectedProduct(false)}} size={30}/>
               </div>
               
