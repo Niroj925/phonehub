@@ -33,7 +33,7 @@ function Homepage() {
          
         </div>
         <div style={{ position: 'absolute', top: '60%', left: '10%' }}>
-         <h3 style={{color:'white'}} >My orders</h3>
+         {/* <h3 style={{color:'white'}} >My orders</h3> */}
            <Row >
             <Col style={{display:'flex'}}>
              <Button
