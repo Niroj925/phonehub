@@ -10,6 +10,7 @@ import './auth.js';
 import passport from 'passport';
 import session from 'express-session';
 import {notfound,errHandler} from './middleware/errorMiddleware.js';
+import cookieParser from "cookie-parser";
 
 // import customerRoute from './route/customerRoute.js';
 // import orderItemRoute from './route/orderItemRoute.js';
@@ -30,7 +31,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(cookieParser());
 app.use(express.json());
 app.use(cors());
 
@@ -46,7 +47,10 @@ app.use('/api/review',reviewRoute);
 app.use('/user',authRoute);
 
 //this is statc url for image 
-app.use('/public/image',express.static('./public/image'));
+// app.use('/public/image',express.static('./public/image'));
+// app.use('/public/image', express.static('public/image'));
+app.use('/public/image', express.static(path.join(__dirname, 'public', 'image')));
+
 
 app.use(notfound);
 app.use(errHandler);
