@@ -13,7 +13,7 @@ function myproduct() {
   
     const { userid } = router.query
     console.log(userid);
-
+   
     const getMyProducts=async ()=>{
     try {
       const response = await api.get(`product/getfilterproduct`, {
@@ -50,7 +50,7 @@ function myproduct() {
       <Card onClick={() => handleCardClick(product)}>
         <Card.Img
           variant="top"
-          src={`https://ecommerceback-mklr.onrender.com/${product.image}`}
+          src={`${process.env.BACKEND_API}/${product.image}`}
           className={styles.cardImage}
         />
         <Card.Body>
@@ -71,7 +71,7 @@ function myproduct() {
                 <Button onClick={()=>{setShowSelectedProduct(false)}} >Close</Button>
               </div>
               
-              <Card.Img variant="top" src={`http://localhost:8080/${slectedProduct.image}`} className={styles.selectedCardImage}/>
+              <Card.Img variant="top" src={`${process.env.BACKEND_API}/${slectedProduct.image}`} className={styles.selectedCardImage}/>
               <hr/>
               <Card.Body>
                 <Card.Title>{slectedProduct.name}</Card.Title>

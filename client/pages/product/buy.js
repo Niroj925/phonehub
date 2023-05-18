@@ -281,7 +281,7 @@ export async function getServerSideProps({ query }) {
    console.log('userId:')
    console.log(userId)
 
-    const customerResponse = await axios.post(`https://ecommerceback-mklr.onrender.com/user/customer`, {
+    const customerResponse = await axios.post(`${process.env.BACKEND_API}/user/customer`, {
       customerId:userId
     });
   

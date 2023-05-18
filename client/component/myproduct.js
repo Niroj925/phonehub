@@ -10,6 +10,7 @@ import {FaTrash} from 'react-icons/fa'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 // import { SelectProduct } from '../store/slices/productslice.js';
 
 import { useDispatch } from 'react-redux'
@@ -22,8 +23,11 @@ function myproduct() {
     const dispatch=useDispatch();
     const { userid } = router.query
 
+    
     console.log(userid);
+    // console.log(`API URL: ${process.env.BACKEND_API}`);
 
+    
     const getMyProducts=async ()=>{
       try {
         const response = await api.get(`user/getproduct/${userid}`, {
@@ -98,7 +102,7 @@ function myproduct() {
         {products.map((product) => (
           <Col key={product._id} className={styles.productCard}>
             <Card  >
-              <Card.Img variant="top" src={`https://ecommerceback-mklr.onrender.com/${product.image}`} className={styles.cardImage} 
+              <Card.Img variant="top" src={`${process.env.BACKEND_API}/${product.image}`} className={styles.cardImage} 
               onClick={() => handleCardClick(product)}
               />
               <Card.Body>
@@ -127,7 +131,7 @@ function myproduct() {
                 <RiCloseLine onClick={()=>{setShowSelectedProduct(false)}} size={30}/>
               </div>
               
-              <Card.Img variant="top" src={`https://ecommerceback-mklr.onrender.com/${slectedProduct.image}`} className={styles.selectedCardImage}/>
+              <Card.Img variant="top" src={`${process.env.BACKEND_API}/${slectedProduct.image}`} className={styles.selectedCardImage}/>
               <hr/>
               <Card.Body>
                 <Card.Title>{slectedProduct.name}</Card.Title>

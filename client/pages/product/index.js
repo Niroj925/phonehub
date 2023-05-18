@@ -314,7 +314,7 @@ productsReview.forEach(review => {
             <Card  >
               <Card.Img 
               variant="top"
-               src={`https://ecommerceback-mklr.onrender.com/${product.image}`} 
+               src={`${process.env.BACKEND_API}/${product.image}`} 
                className={styles.cardImage}
                onClick={() => handleCardClick(product)}
                />
@@ -367,7 +367,7 @@ productsReview.forEach(review => {
               <Card  >
                 <Card.Img 
                 variant="top"
-                 src={`https://ecommerceback-mklr.onrender.com/${product.image}`} 
+                 src={`${process.env.BACKEND_API}/${product.image}`} 
                  className={styles.cardImage}
                  onClick={() => handleCardClick(product)}
                  />

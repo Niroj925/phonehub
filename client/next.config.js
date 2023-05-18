@@ -4,3 +4,9 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+
+module.exports = {
+  env: {
+    BACKEND_API: 'https://ecommerceback-mklr.onrender.com',
+  },
+};

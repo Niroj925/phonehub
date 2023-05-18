@@ -20,6 +20,8 @@ export default function SignUpForm() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -33,6 +35,7 @@ export default function SignUpForm() {
   };
 
   const handleSubmit = async(event) => {
+    
     event.preventDefault();
     console.log(`Email: ${email}, Password: ${password}`);
     event.preventDefault();
