@@ -49,8 +49,8 @@ app.use('/user',authRoute);
 //this is statc url for image 
 // app.use('/public/image',express.static('./public/image'));
 
-// app.use('/public/image', express.static('public/image'));
-app.use('/public/image', express.static(path.join(__dirname, 'public', 'image')));
+app.use('/public/image', express.static('public/image'));
+// app.use('/public/image', express.static(path.join(__dirname, 'public', 'image')));
 
 
 app.use(notfound);
