@@ -46,7 +46,7 @@ function index() {
           }
         }
       );
-        // console.log(response.data);
+        
         setProducts(response.data);
      
       } catch (error) {
@@ -60,7 +60,7 @@ function index() {
      
       try {
         const response = await api.post("review/get");
-          // console.log(response.data);
+    
           setProductsReview(response.data);
          
         } catch (error) {
