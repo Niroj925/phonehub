@@ -26,10 +26,13 @@ const AddProductForm = (props) => {
     console.log(userid);
 
   const handleAddFeature = () => {
-    setFeatures([...features, { name: featureName, value:featureValue }]);
+    if(featureName&&featureValue){
+      setFeatures([...features, { name: featureName, value:featureValue }]);
     console.log(features);
     setFeatureName('');
     setFeatureValue('');
+    }
+    
   };
 
 
@@ -60,8 +63,10 @@ const AddProductForm = (props) => {
     // formData.append('countInStock', countInStock);
     // formData.append('features', features);
     features.forEach((feature, index) => {
-      formData.append(`features[${index}][name]`, feature.name);
+      if(feature.name&&feature.value){
+        formData.append(`features[${index}][name]`, feature.name);
       formData.append(`features[${index}][value]`, feature.value);
+      } 
     });
     formData.append('image', image);
     formData.append('user',userid)

@@ -209,7 +209,7 @@ function index() {
   return (
        <Container fluid >
         <Stack>
-       <Row className={styles.filterBar}>
+       <Row className={styles.filterBar} >
        
        <Form>
        <Row xs={1} sm={2} md={3} >
