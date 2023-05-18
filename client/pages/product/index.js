@@ -287,6 +287,10 @@ function index() {
        <Row>
          <h2>Available products</h2>
          <hr/>
+            {
+
+              (products.length>0)?(
+
             <Row xs={1} sm={2} md={3}>
         {(sortedProducts.length>0)?(sortedProducts.map((product) => {
 
@@ -394,6 +398,11 @@ productsReview.forEach(review => {
         )
       }
       </Row>
+        ):(
+          <h3>Loading....</h3>
+        )
+      }
+
        </Row>
        </Stack>
        <GoogleDialogBox isOpen={showDiaogue} onClose={handleClose} />

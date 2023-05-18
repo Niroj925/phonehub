@@ -22,13 +22,9 @@ function myproduct() {
     const router=useRouter();
     const dispatch=useDispatch();
     const { userid } = router.query
-
-    
-    console.log(userid);
-    // console.log(`API URL: ${process.env.BACKEND_API}`);
-
-    
+   
     const getMyProducts=async ()=>{
+      if(userid){
       try {
         const response = await api.get(`user/getproduct/${userid}`, {
           headers: {
@@ -43,6 +39,7 @@ function myproduct() {
           console.log(error)
           router.push('/');
         }
+      }
       }
 
       useEffect(() => {

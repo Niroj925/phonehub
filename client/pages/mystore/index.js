@@ -46,7 +46,7 @@ export default function SignUpForm() {
     const res=await api.post('/user/login',data);
 
     console.log(res);
-    if(res){     
+    if(res.data){     
       toast.success('Successfully login', {
         position: "bottom-right",
         autoClose: 3000,
