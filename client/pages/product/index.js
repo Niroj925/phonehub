@@ -73,8 +73,7 @@ function index() {
     useEffect(()=>{
         getMyProducts(filterSearchData);
         getProductsReview(); 
-        // console.log('review of products');
-        // console.log(productsReview)
+      
     },[])
    
     const handleCardClick=(product)=>{
@@ -83,8 +82,7 @@ function index() {
     const buyNow=(product)=>{
        setSelectedPid(product._id);
        localStorage.setItem('slectedproductid', JSON.stringify(product._id));
-      //  console.log(selectedPid);
-      // router.push(`/product/buy?id=${product._id}`)
+      
       setShowDialogue(true);
 
   }
