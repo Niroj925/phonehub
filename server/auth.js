@@ -4,11 +4,11 @@ import passport from 'passport';
 import 'dotenv/config';
 import customerModel from './model/customerAccount.js';
 
-// const{GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET}=process.env;
+const{GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET}=process.env;
 
  passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "https://ecommerceback-mklr.onrender.com/user/auth/google/callback",
     // callbackURL:` http://localhost:8080/user/auth/google/callback?productId=${productId}`,
     passReqToCallback:true
@@ -28,7 +28,8 @@ import customerModel from './model/customerAccount.js';
   
   ));
 
-
+//to read and write from passport session we have to do serialize and deserialize 
+//now we can get some datas of sign in email's 
 passport.serializeUser(function(user, done) {
     return done(null, user);
    });
