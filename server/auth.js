@@ -28,8 +28,7 @@ const{GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET}=process.env;
   
   ));
 
-//to read and write from passport session we have to do serialize and deserialize 
-//now we can get some datas of sign in email's 
+
 passport.serializeUser(function(user, done) {
     return done(null, user);
    });
