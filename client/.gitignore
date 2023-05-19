@@ -29,8 +29,6 @@ yarn-error.log*
 .env*.local
 .env*.production
 .env*.development
+ 
 # vercel
 .vercel
-
-.env
-next.config.js
