@@ -15,6 +15,7 @@ export default function Home() {
         <meta name="fonehub" content="get mobile smart phone in fonehub" />
          <meta name="gattilo phone" content="ramro phone haru paune site" />
          <meta name="ramro phone " content="best phone" />
+         <meta name="sasto ramro phone " content="best sasto ramro  phone" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/mob.png" />
       </Head>
