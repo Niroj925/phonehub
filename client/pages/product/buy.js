@@ -226,29 +226,6 @@ useEffect(() => {
          </>
       )}
 
-  {/* <Form.Group controlId="shippingAddress.address">
-    <Form.Label>Address</Form.Label>
-    <Form.Control
-      type="text"
-      value={formData.shippingAddress.address}
-      onChange={(e) =>
-        setFormData({
-          ...formData,
-          shippingAddress: {
-            ...formData.shippingAddress,
-            address: e.target.value
-          }
-        })
-    }/>
- </Form.Group> */}
-
-{/* <Button onClick={()=>setShowPayment(true)}>Pay Now</Button> */}
-{/* <br/>
-{
-      showPayment&&(
-        <Payment/>
-      )
-    } */}
 
  <div style={{display:'flex',justifyContent:"space-between"}}>
           <div>
