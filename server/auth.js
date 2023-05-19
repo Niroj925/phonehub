@@ -1,13 +1,14 @@
+
 import GoogleStrategy from'passport-google-oauth20';
 import passport from 'passport';
 import 'dotenv/config';
 import customerModel from './model/customerAccount.js';
 
-const{GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET}=process.env;
+// const{GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET}=process.env;
 
  passport.use(new GoogleStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "https://ecommerceback-mklr.onrender.com/user/auth/google/callback",
     // callbackURL:` http://localhost:8080/user/auth/google/callback?productId=${productId}`,
     passReqToCallback:true
