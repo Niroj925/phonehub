@@ -16,7 +16,7 @@ export default function Home() {
          <meta name="gattilo phone" content="ramro phone haru paune site" />
          <meta name="ramro phone " content="best phone" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/mob.png" />
       </Head>
       <div>
         <Homepage/>
