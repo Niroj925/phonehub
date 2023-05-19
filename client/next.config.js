@@ -7,6 +7,6 @@ module.exports = nextConfig
 
 module.exports = {
   env: {
-    BACKEND_API:process.env.BACKEND_API,
+    BACKEND_API: 'https://ecommerceback-mklr.onrender.com',
   },
 };
