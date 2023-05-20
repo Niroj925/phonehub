@@ -36,6 +36,7 @@ app.use(express.json());
 app.use(cors());
 
 
+
 connectDB();
 
 app.use('/api/user',userRoute);

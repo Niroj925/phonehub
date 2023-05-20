@@ -120,7 +120,7 @@ const AddProductForm = (props) => {
   return (
     <>
     {props.isOpen&&(
-   <Container className={styles.addProduct}>
+   <Container className={styles.addProduct} >
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="name">
         <Form.Label>Name</Form.Label>
