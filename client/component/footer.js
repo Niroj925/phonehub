@@ -10,7 +10,7 @@ const Footer = () => {
           <p className={style.center}>
             {'© '}
             {new Date().getFullYear()}
-            {' All rights reserved by PhoneHub.'}
+            {' All rights reserved by FoneHub.'}
           </p>
         </div>
       </footer>
