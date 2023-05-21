@@ -23,12 +23,12 @@ const AddProductForm = (props) => {
   const router=useRouter();
   
     const { userid } = router.query
-    console.log(userid);
+    // console.log(userid);
 
   const handleAddFeature = () => {
     if(featureName&&featureValue){
       setFeatures([...features, { name: featureName, value:featureValue }]);
-    console.log(features);
+    // console.log(features);
     setFeatureName('');
     setFeatureValue('');
     }
@@ -39,7 +39,7 @@ const AddProductForm = (props) => {
   const handleNameChange=(event)=>{
  
     setFeatureName(event.target.value);
-    console.log(featureName);
+    // console.log(featureName);
   }
 
   const handleValueChange=(event)=>{
@@ -52,7 +52,7 @@ const AddProductForm = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-   console.log(props.isOpen)
+  //  console.log(props.isOpen)
   //  console.log(props.onClose)
     const formData = new FormData();
     formData.append('name', name);
@@ -77,7 +77,7 @@ const AddProductForm = (props) => {
          token: JSON.parse(localStorage.getItem("token")),               
         },
       });
-      console.log(response.data);
+      // console.log(response.data);
       // Handle response
       // props.onClose();
       if(response.data){

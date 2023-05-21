@@ -34,7 +34,7 @@ const { userid } = router.query;
 useEffect(() => {
   async function getProduct() {
     const productId = JSON.parse(localStorage.getItem('slectedproductid'));
-    console.log("productid:", productId);
+    // console.log("productid:", productId);
     const productResponse = await api.post(`product/getproductbyid`, {
       productId: productId
     });
@@ -70,7 +70,7 @@ useEffect(() => {
 }, [])
 
 useEffect(() => {
-  console.log(product);
+  // console.log(product);
 
 }, [product]);
 
@@ -115,7 +115,7 @@ useEffect(() => {
     e.preventDefault();
     // API request with formData
 
-    console.log(formData);
+    // console.log(formData);
 
     try {
         const response = await api.post(
@@ -125,7 +125,7 @@ useEffect(() => {
           // console.log(response.data);
           // setMyOrder(response.data);
           if(response.data){
-            console.log(response.data);
+            // console.log(response.data);
           setMyOrder(response.data);
 
             toast.success(`Thank You ${customer.name}, for Purchasing this item `, {
@@ -145,7 +145,7 @@ useEffect(() => {
           }
         } catch (error) {
           // Handle error
-          console.log(error)
+          // console.log(error)
           toast.error('Your order can not  placed', {
             position: "bottom-right",
             autoClose: 3000,

@@ -29,9 +29,9 @@ function myproduct() {
          token: JSON.parse(localStorage.getItem("token")),               
         },
       });
-        console.log(response.data);
+        // console.log(response.data);
         setOrders(response.data);
-        console.log(orders);
+        // console.log(orders);
       } catch (error) {
         // Handle error
         console.log(error)
@@ -45,7 +45,7 @@ function myproduct() {
    
     const selectOrder=(order)=>{
        setSelectedOrder(order);  
-        console.log(selectedOrder);
+        // console.log(selectedOrder);
         setShowSelectedOrder(true);
     }
 
@@ -88,7 +88,7 @@ function downloadPDF(selectedOrder) {
                token: JSON.parse(localStorage.getItem("token")),               
               },
             });
-              console.log(response.data);
+              // console.log(response.data);
               if(response){
              setShowSelectedOrder(false);
               }

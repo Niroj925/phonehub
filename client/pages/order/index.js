@@ -54,14 +54,14 @@ const MyOrder = () => {
     e.preventDefault();
     // Handle form submission   
     setNumber(number)
-    console.log('orders:');
-    console.log(orders);
+    // console.log('orders:');
+    // console.log(orders);
   };
 
   const handleClick=(order)=>{
     setSelectedOrder(order);
-    console.log(selectedOrder);
-    console.log(order.shippingAddress.location)
+    // console.log(selectedOrder);
+    // console.log(order.shippingAddress.location)
     setShowLocation(true);
 
   }
@@ -72,8 +72,8 @@ const MyOrder = () => {
       setDestinationCoordinates([lat, lon]);
       setDestinationCoordinates([lat, lon]);
       
-      console.log('destinationCoordinates')
-      console.log(destinationCoordinates)
+      // console.log('destinationCoordinates')
+      // console.log(destinationCoordinates)
       setShowLocation(true);
     }
 
@@ -121,7 +121,7 @@ const MyOrder = () => {
         }
         try{
           const response=await api.post('/order/cancel',orderDetail);       
-          console.log(response.data);
+          // console.log(response.data);
           if(response.data){
             setOtp('');
             setShowModal(false); 
@@ -191,7 +191,7 @@ const MyOrder = () => {
       
       try{
         const response=await api.post('/order/cancel',orderDetail );       
-        console.log(response.data);
+        // console.log(response.data);
     }catch(err){
         console.log(err)
     }

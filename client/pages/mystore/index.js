@@ -37,15 +37,16 @@ export default function SignUpForm() {
   const handleSubmit = async(event) => {
     
     event.preventDefault();
-    console.log(`Email: ${email}, Password: ${password}`);
+    // console.log(`Email: ${email}, Password: ${password}`);
     event.preventDefault();
     const data={
       "email":email,
       "password":password
     }
+    try{
     const res=await api.post('/user/login',data);
 
-    console.log(res);
+    // console.log(res);
     if(res.data){     
       toast.success('Successfully login', {
         position: "bottom-right",
@@ -62,23 +63,26 @@ export default function SignUpForm() {
         const userid=res.data._id;
         router.push(`/mystore/profile?userid=${userid}`); 
       }
-        else{
-          toast.error("Unable to login", {
-            position: "bottom-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            });
-            setTimeout(() => {
-              router.push('/mystore');
-            }, 3000);
-        }
+      
     setEmail('');
     setPassword('');
+      }catch(err){
+        // console.log(err);
+        toast.error("Invalid credentials", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+          setTimeout(() => {
+            router.push('/mystore');
+          }, 3000);
+      }
+
   };
 
   return (

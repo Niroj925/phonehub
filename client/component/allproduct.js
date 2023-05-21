@@ -12,7 +12,7 @@ function myproduct() {
     const router=useRouter();
   
     const { userid } = router.query
-    console.log(userid);
+    // console.log(userid);
    
     const getMyProducts=async ()=>{
     try {
@@ -21,9 +21,9 @@ function myproduct() {
          token: JSON.parse(localStorage.getItem("token")),               
         },
       });
-        console.log(response.data);
+        // console.log(response.data);
         setProducts(response.data);
-        console.log(products);
+        // console.log(products);
       } catch (error) {
         // Handle error
         console.log(error)

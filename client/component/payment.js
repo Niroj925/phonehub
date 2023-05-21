@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 const Payment = ({formData}) => {
-  console.log('formdata info')
-  console.log(formData)
+  // console.log('formdata info')
+  // console.log(formData)
   const handleSubmit = (event) => {
     event.preventDefault();
     post("https://uat.esewa.com.np/epay/main", {

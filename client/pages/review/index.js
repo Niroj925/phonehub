@@ -5,6 +5,8 @@ import { Container,Row,Col,Card,Button,Form } from 'react-bootstrap';
 import styles from '../../styles/ProductCard.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RatingStars from '@/component/rating.js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Index() {
   const [product, setProduct] = useState(null);
@@ -18,13 +20,13 @@ export default function Index() {
 
 useEffect(() => {
     if (productId) {
-        console.log(productId)
-        console.log(customerId)
+        // console.log(productId)
+        // console.log(customerId)
 
       const getProduct = async () => {
         try {
           const response = await api.post('/product/getproductbyid', { productId });
-          console.log(response.data)
+          // console.log(response.data)
           if (response.data) {
             setProduct(response.data);
           }
@@ -45,8 +47,8 @@ useEffect(() => {
   };
 
   const handleSubmit=async()=>{
-    console.log(star);
-    console.log(comment);
+    // console.log(star);
+    // console.log(comment);
 
     let data={
         "customerId":customerId,
@@ -59,7 +61,21 @@ useEffect(() => {
         const response=await api.post('/review/add',data);
         console.log(response.data);
         if(response){
-            router.push('/')
+
+          toast.success(`Thanks for your Review. `, {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+
+            setTimeout(() => {
+              router.push('/');
+            }, 3000)
         }
     }catch(err){
         console.log(err);
@@ -138,7 +154,7 @@ useEffect(() => {
           </Row>
             )
         }
-      
+      <ToastContainer/>
     </Container>
   );
 }

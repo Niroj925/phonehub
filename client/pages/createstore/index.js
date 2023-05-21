@@ -22,6 +22,7 @@ export default function SignUpForm() {
   };
 
   const handlePasswordChange = (event) => {
+    
     setPassword(event.target.value);
   };
 
@@ -40,8 +41,9 @@ export default function SignUpForm() {
       "email":email,
       "password":password
     }
+    try{
     const res=await api.post('user/register',data);
-    console.log(res);
+    // console.log(res);
     if(res){
         toast.success('Successfully created Account', {
           position: "bottom-right",
@@ -78,6 +80,21 @@ export default function SignUpForm() {
     setEmail('');
     setPassword('');
     setUsername(' ');
+      }catch(err){
+        toast.error("Unable to create Account", {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+          setTimeout(() => {
+            router.push('/');
+          }, 3000);
+      }
   };
 
   return (

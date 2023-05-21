@@ -31,9 +31,9 @@ function myproduct() {
            token: JSON.parse(localStorage.getItem("token")),               
           },
         });
-          console.log(response.data);
+          // console.log(response.data);
           setProducts(response.data);
-          console.log(products);
+          // console.log(products);
         } catch (error) {
           // Handle error
           console.log(error)
@@ -61,7 +61,7 @@ function myproduct() {
     );
 
     const deleteProduct=async(id)=>{
-      console.log('item has been deleted');
+      // console.log('item has been deleted');
       try{
         const response=await api.post('/product/remove',{"productId":id})
         if (response.data){

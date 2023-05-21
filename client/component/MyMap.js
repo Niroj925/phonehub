@@ -10,8 +10,8 @@ import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import style from '../styles/Map.module.css';
 
 const MyMap = ({ onMarkerPositionChange, destinationCoordinates }) => {
-  console.log('destinaion on map')
-  console.log(destinationCoordinates);
+  // console.log('destinaion on map')
+  // console.log(destinationCoordinates);
   const position = destinationCoordinates?destinationCoordinates:[27.6969,85.3638]; // specify latitude and longitude coordinates
   const [markerPosition, setMarkerPosition] = useState(position);
 
