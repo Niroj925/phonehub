@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-
+import 'dotenv/config';
 
 let sendMail=(email,subject,msg)=>{
 
@@ -8,7 +8,7 @@ let sendMail=(email,subject,msg)=>{
         service:"gmail",
         auth: {
           user: 'hamroghar531@gmail.com',
-          pass: 'gmdvskjwbphdjkor'
+          pass: process.env.EMAIL_PASSWORD
         }
       });
       
@@ -38,7 +38,7 @@ let sendMailFile=(email,subject,msg,filePath)=>{
       service:"gmail",
       auth: {
         user: 'hamroghar531@gmail.com',
-        pass: 'gmdvskjwbphdjkor'
+        pass:process.env.EMAIL_PASSWORD
       }
     });
     
