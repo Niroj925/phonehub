@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../../styles/CreateStore.module.css'
 import api from '../api/api.js';
+import {Modal, Form, Button ,Container,Row,Card} from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
@@ -19,8 +20,12 @@ export default function SignUpForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
-  
+  const [showOTPForm, setShowModal] = useState(false);
+  const [showChangeField,setShowChangeField]=useState(false);
+  const [otp, setOtp] = useState('');
+  const [useremail, setUserEmail] = useState('');
+  const [newpassword, setNewPassword] = useState('');
+  const [errMsg,setErrMsg]=useState('');
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -32,6 +37,13 @@ export default function SignUpForm() {
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleUserEmailChange = (event) => {
+    setUserEmail(event.target.value);
+  };
+  const handlePassChange = (event) => {
+    setNewPassword(event.target.value);
   };
 
   const handleSubmit = async(event) => {
@@ -84,6 +96,114 @@ export default function SignUpForm() {
       }
 
   };
+  const handleCloseModal = () => {
+    setOtp('');
+    setUserEmail('');
+    setNewPassword('');
+    setShowModal(false);
+    setShowChangeField(false);
+  };
+  const handleOtpChange = (event) => {
+    const inputOtp = event.target.value;
+    const otpRegex = /^\d{0,4}$/;
+
+
+    if (otpRegex.test(inputOtp)) {
+      setErrMsg('')
+      setOtp(inputOtp);
+    }else{
+      setErrMsg('Invalid OTP')
+    }
+    // setOtp(event.target.value);
+  };
+
+
+  const handleChangePass = async() => {
+    // Perform validation and cancel order logic here
+    if (otp!=='') {
+      // Call the cancel order API with the OTP
+      let userDetail={
+        "email":useremail,
+        "password":newpassword,
+        "otp":otp
+      }
+      try{
+        const response=await api.post('/user/forgotpass',userDetail);     
+        console.log('got otp')  
+        console.log(response.data);
+        if(response.data){
+          setOtp('');
+          setUserEmail('');
+          setNewPassword('');
+          setShowModal(false); 
+          setShowChangeField(false);
+        }
+        if(response.status===200){
+          toast.success('Password Successfully Reset'), {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            };
+        }
+    }catch(err){
+        console.log(err)
+        console.log('status code:'+err.response.status);
+        setOtp('')
+        setShowModal(false);
+        if(err.response.status===403){
+        toast.error('Invalid OTP or bad credentials', {
+          position: "bottom-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+        }else if(err.response.status===429){
+          toast.error('Too many request ', {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+            setTimeout(()=>{
+              setShowModal(false)
+            },3000)
+          }
+        
+    }
+      // console.log('Cancel order with OTP:', otp);
+      // setShowModal(false); // Close the modal after processing
+    }
+    else{
+       // Call the cancel order API with the OTP
+       let userDetail={
+        "email":useremail,
+        "password":newpassword
+      }
+      try{
+        const response=await api.post('/user/forgotpass',userDetail);       
+        console.log(response.data);
+        if(response.data){
+          setShowModal(true);
+          setShowChangeField(false)
+        }
+      }catch(err){
+        console.log(err);
+      }
+    }
+  };
 
   return (
     <>
@@ -127,11 +247,104 @@ export default function SignUpForm() {
       </div>
       <div className={styles.formGroup}>
         {/* <a href="#" className={styles.forgotPasswordLink}>Forgot password?</a> */}
-        <Link href="#" className={styles.forgotPasswordLink}>Forgot password?</Link>
+        <Link href="#" className={styles.forgotPasswordLink} onClick={()=>{
+          setShowChangeField(true)
+          }}>Forgot password?</Link>
         <span className={styles.separator}>|</span>
         {/* <a href="/signup" className={styles.signUpLink}>Sign up</a> */}
         <Link href="/signup" className={styles.signUpLink}>Sign up</Link>
       </div>
+          
+      {
+
+showOTPForm&&(
+<Modal show={showOTPForm} onHide={handleCloseModal}>
+
+    <Modal.Header closeButton>
+      <Modal.Title>OTP Validation</Modal.Title>
+      
+    </Modal.Header>
+     
+    <Modal.Body>
+      <p>OTP sent to {useremail}</p>
+      <Form>
+        <Form.Group controlId="otpInput">
+          {/* <Form.Label>OTP</Form.Label> */}
+          <Form.Control
+           type="number"
+            value={otp} 
+            onChange={handleOtpChange} 
+            placeholder="Enter OTP"
+            maxLength={4}
+            
+            />
+            <Form.Text style={{color:'red'}}>{errMsg}</Form.Text>
+        </Form.Group>
+      </Form>
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={handleCloseModal}>
+        Close
+      </Button>
+      <Button variant="primary" onClick={handleChangePass}>
+        Confirm
+      </Button>
+
+    </Modal.Footer>
+  </Modal>
+)
+}
+{
+showChangeField&&(
+  <Modal show={showChangeField} onHide={handleCloseModal}>
+
+    <Modal.Header closeButton>
+      <Modal.Title>Change password</Modal.Title>
+      
+    </Modal.Header>
+     
+    <Modal.Body>
+      <p>Enter your Register Email and New Password</p>
+      <Form>
+        <Form.Group controlId="otpInput">
+          {/* <Form.Label>Email</Form.Label> */}
+          <Form.Control
+           type="text"
+            value={useremail} 
+            onChange={handleUserEmailChange} 
+            placeholder="Email.."              
+            />
+
+            <br/>
+              <Form.Control
+           type="password"
+            value={newpassword} 
+            onChange={handlePassChange} 
+            placeholder="Password.."
+            
+            
+            />
+            {/* <Form.Text style={{color:'red'}}>{errMsg}</Form.Text> */}
+        </Form.Group>
+      </Form>
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={handleCloseModal}>
+        Close
+      </Button>
+      <Button variant="primary" onClick={()=>{
+         handleChangePass();
+        setShowChangeField(false);
+        setShowModal(true);
+      }}>
+        Submit
+      </Button>
+
+    </Modal.Footer>
+  </Modal>
+)
+}
+
     </form>
     <ToastContainer/>
     <Footer/>
