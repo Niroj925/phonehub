@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Container, Row, Col, Card ,Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../styles/ProductCard.module.css';
-import {SelectedProduct} from '../store/slices/productslice.js';
+import {SelectedProduct} from '../features/slices/productSlice.js';
 import { RiCloseLine } from 'react-icons/ri';
 import {FaTrash} from 'react-icons/fa'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // import { SelectProduct } from '../store/slices/productslice.js';
 
-import { useDispatch } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
 
 function myproduct() {
     const [products,setProducts]=useState([])
@@ -21,7 +21,9 @@ function myproduct() {
     const[showSelectedProduct,setShowSelectedProduct]=useState(false);
     const router=useRouter();
     const dispatch=useDispatch();
-    const { userid } = router.query
+
+    const userid=useSelector((state)=>state.user.userInfo._id);
+    // const { userid } = router.query
    
     const getMyProducts=async ()=>{
       if(userid){

@@ -7,12 +7,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import {setUser} from '../../store/slice/userSlice.js';
-import {setUser} from '../../store/slices/userSlice';
 import { useRouter } from 'next/router';
 import Navbar from '../../component/navbar.js'
 import Footer from '../../component/footer.js'
 import { useDispatch } from 'react-redux';
+import {setUser } from '../../features/slices/userSlice';
 
 export default function SignUpForm() {
   const router = useRouter();
@@ -55,7 +54,7 @@ export default function SignUpForm() {
       "email":email,
       "password":password
     }
-    try{
+    // try{
     const res=await api.post('/user/login',data);
 
     // console.log(res);
@@ -71,29 +70,31 @@ export default function SignUpForm() {
         theme: "light",
         });
         localStorage.setItem('token', JSON.stringify(res.data.token));
+        // console.log(res.data);
+        const data=res.data;
         dispatch(setUser(res.data));
-        const userid=res.data._id;
-        router.push(`/mystore/profile?userid=${userid}`); 
+        // const userid=res.data._id;
+        router.push(`/mystore/profile`); 
       }
       
     setEmail('');
     setPassword('');
-      }catch(err){
-        // console.log(err);
-        toast.error("Invalid credentials", {
-          position: "bottom-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          });
-          setTimeout(() => {
-            router.push('/mystore');
-          }, 3000);
-      }
+      // }catch(err){
+      //   // console.log(err);
+      //   toast.error("Invalid credentials", {
+      //     position: "bottom-right",
+      //     autoClose: 3000,
+      //     hideProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: "light",
+      //     });
+      //     setTimeout(() => {
+      //       router.push('/mystore');
+      //     }, 3000);
+      // }
 
   };
   const handleCloseModal = () => {

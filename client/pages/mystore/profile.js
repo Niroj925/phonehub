@@ -7,14 +7,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import div from 'next/link.js';
 import styles from '../../styles/Navbar.module.css'
 import { useRouter } from 'next/router.js';
+import {useDispatch, useSelector } from 'react-redux';
+import { logout } from '@/features/slices/userSlice.js';
 
 function Profile() {
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [showMyProduct,setShowMyProduct]=useState(true);
   const [showMyOrder,setShowMyOrder]=useState(false);
-
+  const dispatch=useDispatch();
   const router=useRouter();
-
+  const userinfo=useSelector((state)=>state.user.userInfo);
+  console.log('info usr',userinfo);
+  const userid=useSelector((state)=>state.user.userId);
+  console.log('info usr',userid);
   const handleAddProductClick = () => {
     setShowAddProduct(true);
     setShowMyProduct(false);
@@ -46,6 +51,7 @@ function Profile() {
       const confirmed = window.confirm('Do you want to Logout your Account?');
       if(confirmed){
         localStorage.removeItem("token");
+         dispatch(logout());
       router.push("/");
       }
      

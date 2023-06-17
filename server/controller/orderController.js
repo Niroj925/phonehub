@@ -140,8 +140,6 @@ async cancelOrder(req,res){
      res.status(200).json({ message:`OTP sent to your mail ${email}`});
     // res.status(200).json({email:email,otp:previousOtpCode});
   }
-
- 
 }
 
 async makePayment(req,res){

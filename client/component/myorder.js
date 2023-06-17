@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 import { Container,Table, Row, Col, Card ,Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../styles/ProductCard.module.css';
-import {SelectedProduct} from '../store/slices/productslice.js';
+import {SelectedProduct} from '../features/slices/productSlice.js';
 import jsPDF from 'jspdf';
 
-import { useDispatch } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
 
 function myproduct() {
     const [orders,setOrders]=useState([])
@@ -15,7 +15,9 @@ function myproduct() {
     const[showSelectedOrder,setShowSelectedOrder]=useState(false);
     const router=useRouter();
     const dispatch=useDispatch();
-    const { userid } = router.query
+
+    const userid=useSelector((state)=>state.user.userInfo._id);
+    // const { userid } = router.query
     console.log(userid);
 
     const getMyOrders=async ()=>{

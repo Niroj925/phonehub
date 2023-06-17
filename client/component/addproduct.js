@@ -7,6 +7,7 @@ import api from '../pages/api/api.js'
 import { useRouter } from 'next/router';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
 
 const AddProductForm = (props) => {
   const [name, setName] = useState('');
@@ -22,7 +23,9 @@ const AddProductForm = (props) => {
 
   const router=useRouter();
   
-    const { userid } = router.query
+  const userid=useSelector((state)=>state.user.userInfo._id);
+  console.log(userid);
+    // const { userid } = router.query
     // console.log(userid);
 
   const handleAddFeature = () => {

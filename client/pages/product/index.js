@@ -1,3 +1,5 @@
+"use client";
+
 import React,{useState,useEffect} from 'react'
 import api from '@/pages/api/api.js'
 import { useRouter } from 'next/router';
@@ -8,6 +10,8 @@ import GoogleDialogBox from '@/component/diologuebox';
 import { FaHome } from 'react-icons/fa';
 import { RiCloseLine } from 'react-icons/ri';
 import RatingStars from '@/component/ratedStar';
+import { setProduct } from '@/features/slices/productSlice';
+import { useDispatch ,useSelector} from 'react-redux';
 
 function index() {
     const [products,setProducts]=useState([])
@@ -22,6 +26,12 @@ function index() {
     const [sortBy, setSortBy] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
   
+
+    const dispatch=useDispatch();
+ 
+    const product=useSelector((state)=>state.product.products);
+    console.log('redux product:',product);
+
    const router=useRouter();
 
       const filterSearchData={
@@ -49,7 +59,7 @@ function index() {
       );
         
         setProducts(response.data);
-     
+       dispatch(setProduct(response.data));
       } catch (error) {
         // Handle error
         console.log(error)

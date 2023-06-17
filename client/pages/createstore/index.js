@@ -8,6 +8,7 @@ import {useRouter, userRouter} from 'next/router';
 import Navbar from '../../component/navbar.js';
 import Footer from '../../component/footer.js'
 import Link from 'next/link';
+import { Container,Row,Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function SignUpForm() {

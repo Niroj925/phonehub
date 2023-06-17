@@ -6,7 +6,16 @@ import {Container,Row,Col }from 'react-bootstrap';
 import { Image,Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './footer.js';
+import { useSelector } from 'react-redux';
+
 function Homepage() {
+
+  // const products=useSelector((state)=>state.productReducer.value);
+
+  // if(products){
+  //   console.log(products);
+  // }
+
   return (
     <Container className={styles.home} fluid>
       <Row >
