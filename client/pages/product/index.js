@@ -1,4 +1,3 @@
-"use client";
 
 import React,{useState,useEffect} from 'react'
 import api from '@/pages/api/api.js'
@@ -13,8 +12,8 @@ import RatingStars from '@/component/ratedStar';
 import { setProduct } from '@/features/slices/productSlice';
 import { useDispatch ,useSelector} from 'react-redux';
 
-function index() {
-    const [products,setProducts]=useState([])
+function index({allProduct}) {
+    const [products,setProducts]=useState(allProduct);
     const [sortedProducts,setSortedProducts]=useState([])
     const [productsReview,setProductsReview]=useState([])
     const [minPrice,setMinPrice]=useState()
@@ -298,7 +297,7 @@ function index() {
          <hr/>
             {
 
-              (products.length>0)?(
+              (products)?(
 
             <Row xs={1} sm={2} md={3}>
         {(sortedProducts.length>0)?(sortedProducts.map((product) => {
@@ -417,5 +416,19 @@ productsReview.forEach(review => {
        <GoogleDialogBox isOpen={showDiaogue} onClose={handleClose} />
     </Container>
   )}
+
+
+  export async function getServerSideProps() {
+
+    const response = await api.get(`product/getproduct`);
+  
+    return {
+      props: {
+        allProduct: response.data,
+         revalidate: 1
+      }
+    }
+  }
+  
 
 export default index
