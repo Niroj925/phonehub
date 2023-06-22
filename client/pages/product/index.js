@@ -415,20 +415,6 @@ productsReview.forEach(review => {
        </Stack>
        <GoogleDialogBox isOpen={showDiaogue} onClose={handleClose} />
     </Container>
-  )}
-
-
-  export async function getServerSideProps() {
-
-    const response = await api.get(`product/getproduct`);
-  
-    return {
-      props: {
-        allProduct: response.data,
-         revalidate: 1
-      }
-    }
-  }
-  
+  )}  
 
 export default index
