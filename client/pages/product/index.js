@@ -12,8 +12,8 @@ import RatingStars from '@/component/ratedStar';
 import { setProduct } from '@/features/slices/productSlice';
 import { useDispatch ,useSelector} from 'react-redux';
 
-function index({allProduct}) {
-    const [products,setProducts]=useState(allProduct);
+function index() {
+    const [products,setProducts]=useState(null);
     const [sortedProducts,setSortedProducts]=useState([])
     const [productsReview,setProductsReview]=useState([])
     const [minPrice,setMinPrice]=useState()
