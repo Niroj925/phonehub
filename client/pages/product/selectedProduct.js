@@ -7,17 +7,30 @@ import styles from '../../styles/ProductCard.module.css';
 import { RiCloseLine } from 'react-icons/ri';
 import {FaUserCircle} from 'react-icons/fa'
 import { useState } from 'react';
+import {useSelector} from 'react-redux';
 
-function SelectedProduct({ product,productReview }) {
-    // console.log(productReview)
-    const reviews=productReview=!null?productReview:null;
-    // console.log('revi');
-    // console.log(reviews)
+function SelectedProduct() {
+
+  const products=useSelector((state)=>state.product.products);
+  // console.log('redux product:',products);
+
+  const reviews=useSelector((state)=>state.product.reviews);
+  // console.log('review product:',reviews);
+   
+   
     const router=useRouter();
   const { id } = router.query;
+
+  console.log(`id:${id}`);
+
+  const product = products.find(item => item._id === id);
+  const Review=reviews.find(item=>item.productId === id);
+console.log(Review);
+const review=Review? Review.review:null;
+// const review=Review.review=!null?Review.review:null;
   
   const [showReview,setShowReview]=useState(false);
-  const [review,setReview]=useState(reviews);
+  // const [review,setReview]=useState(reviews);
 
   const handleClose=()=>{
     router.push('/product');

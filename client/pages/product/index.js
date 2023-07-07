@@ -9,7 +9,7 @@ import GoogleDialogBox from '@/component/diologuebox';
 import { FaHome } from 'react-icons/fa';
 import { RiCloseLine } from 'react-icons/ri';
 import RatingStars from '@/component/ratedStar';
-import { setProduct } from '@/features/slices/productSlice';
+import { setProduct,setReviews } from '@/features/slices/productSlice';
 import { useDispatch ,useSelector} from 'react-redux';
 
 function index() {
@@ -28,8 +28,8 @@ function index() {
 
     const dispatch=useDispatch();
  
-    const product=useSelector((state)=>state.product.products);
-    console.log('redux product:',product);
+    // const product=useSelector((state)=>state.product.products);
+    // console.log('redux product:',product);
 
    const router=useRouter();
 
@@ -72,7 +72,7 @@ function index() {
         const response = await api.post("review/get");
     
           setProductsReview(response.data);
-         
+         dispatch(setReviews(response.data));
         } catch (error) {
           // Handle error
           console.log(error)
