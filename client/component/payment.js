@@ -45,8 +45,8 @@ const Payment = ({formData}) => {
     <input value={formData.shippingPrice} name="pdc" type="hidden"/>
     <input value="EPAYTEST" name="scd" type="hidden"/>
     <input value={formData._id} name="pid" type="hidden"/>
-    <input value="https://fonehub.netlify.app//payment/success?q=su" type="hidden" name="su"/>
-    <input value="https://fonehub.netlify.app//payment/failed?q=fu" type="hidden" name="fu"/>
+    <input value="https://fonehub.netlify.app/payment/success?q=su" type="hidden" name="su"/>
+    <input value="https://fonehub.netlify.app/payment/failed?q=fu" type="hidden" name="fu"/>
       <Button  type="submit" >Continue Pay with Esewa </Button>
     </form>
     </div>
