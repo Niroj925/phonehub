@@ -26,13 +26,15 @@ function Homepage() {
       </Row>
        <Row>
         <div style={{ position: 'relative' }}>
+        <h1 className={styles.title}>Buy the latest mobile phones</h1>
         <div style={{height:'auto'}}>
         <Image src="../image/bgmob.gif" alt="Image"  className={styles.bgImage} />
-     
         </div>
+          
+        
 
         <div style={{ position: 'absolute', top: '30%', left: '10%' }}>
-         {/* <h2 style={{color:'rgb(29, 56, 47)'}}>Buy the latest mobile phones</h2> */}
+         {/*  */}
          <Button id={styles.btnid} className={styles.btn} onClick={() => {
             window.location.href = '/product';
           }}
