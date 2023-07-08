@@ -59,7 +59,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    background-color: #687a75;
+    background-color:rgb(184, 221, 218);
     margin-bottom: 20px;
    
   }
@@ -70,7 +70,7 @@
     margin: 15px;
     margin-right: 30px;
     padding: 10px 25px;
-    background-color: #687a75;
+    background-color: rgb(184, 221, 218);
     color: #333;
     /* background-color: #da6a0f; */
     /* border: 1px solid #333; */
@@ -86,7 +86,7 @@
       margin: 10px;
       margin-right: 5px;
       padding: 10px 10px;
-      background-color: #687a75;
+      background-color:rgb(184, 221, 218);
       color: #333;;
       /* background-color: #da6a0f; */
       /* border: 1px solid #333; */
@@ -108,7 +108,7 @@
     margin: 15px;
 
     padding: 10px 25px;
-    background-color: #687a75;
+    background-color: rgb(184, 221, 218);
     color: #333;
     /* border: 1px solid #333; */
     border-radius: 25px;

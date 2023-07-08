@@ -27,12 +27,12 @@ function Homepage() {
        <Row>
         <div style={{ position: 'relative' }}>
         <div style={{height:'auto'}}>
-        <Image src="../image/bgmob.jpg" alt="Image"  className={styles.bgImage} />
+        <Image src="../image/bgmob.gif" alt="Image"  className={styles.bgImage} />
      
         </div>
 
         <div style={{ position: 'absolute', top: '30%', left: '10%' }}>
-         <h2 style={{color:'rgb(29, 56, 47)'}}>Buy the latest mobile phones</h2>
+         {/* <h2 style={{color:'rgb(29, 56, 47)'}}>Buy the latest mobile phones</h2> */}
          <Button id={styles.btnid} className={styles.btn} onClick={() => {
             window.location.href = '/product';
           }}
@@ -42,10 +42,15 @@ function Homepage() {
          
         </div>
         <br/>
-        <div style={{ position: 'absolute', top: '45%', marginLeft: '65%',marginTop:'20px' }}>
+        <div className={styles.myorder}>
+        <Button
+             id={styles.btnid} className={styles.btn} onClick={() => {
+              window.location.href = '/order';
+            }}
+             >My Order</Button>
          
-         <h3 style={{color:'black'}} >My orders</h3>
-           <Row >
+         {/* <h3 style={{color:'black'}} >My orders</h3> 
+            <Row >
             <Col style={{display:'flex'}}>
              <Button
              id={styles.btnid} className={styles.btn} onClick={() => {
@@ -54,7 +59,7 @@ function Homepage() {
              >My Order</Button>
             </Col>
            
-            </Row> 
+            </Row>  */}
         </div>
       
       </div>

@@ -27,6 +27,21 @@
     height: auto;
   }
 
+  /* .myorder{
+     position: 'absolute';
+     top: '57%';
+     margin-left: '75%';
+     margin-top:'20px' 
+  } */
+
+  .myorder Button{
+     position: absolute;
+     margin-left: 72%;
+     margin-top: -27%;
+  }
+ 
+ 
+
 @media (max-width: 525px) { /* Extra small devices */
     .bgImage {
       width: 100%;
@@ -34,5 +49,12 @@
       margin-bottom: 10px;
       margin-top: 5px;
     }
+
+    .myorder Button{
+      position: absolute;
+      margin-left: 65%;
+      margin-top: -40%;
+      
+   }
   }
 
