@@ -17,11 +17,14 @@ const MarkersMap = dynamic(() => import('../../component/MyMap.js'), {
   ssr: false,
 });
 
-function SelectedProduct({customer }) {
+function SelectedProduct() {
    
     // console.log(customer)  
   const [product, setProduct] = useState({});
-const [formData, setFormData] = useState({});
+  const [customer,setCustomer]=useState({});
+const [formData, setFormData] = useState({
+  customerContact: '',
+});
 const [myOrder,setMyOrder]=useState(null);
 const [showMap,setShowMap]=useState(false);
 const [showPayment,setShowPayment]=useState(false);
@@ -31,16 +34,32 @@ const [fieldMsg,setFieldMsg]=useState('');
 const router = useRouter();
 const { userid } = router.query;
 
+console.log(`userid:${userid}`);
+
 useEffect(() => {
-  async function getProduct() {
+
+  const getCustomer=async ()=>{
+
+    try{
+    const customerResponse = await axios.post(`${process.env.BACKEND_API}/user/customer`, {
+      customerId:userid
+    });
+    console.log(customerResponse);
+    setCustomer(customerResponse.data);
+  }catch(err){
+    console.log(err);
+  }
+  }
+
+   const getProduct =async()=> {
     const productId = JSON.parse(localStorage.getItem('slectedproductid'));
-    // console.log("productid:", productId);
+    console.log("productid:", productId);
     const productResponse = await api.post(`product/getproductbyid`, {
       productId: productId
     });
 
     setProduct(productResponse.data);
-
+     console.log(productResponse.data);
     setFormData({
       user: productResponse.data.user,
       customerId: userid,
@@ -66,15 +85,13 @@ useEffect(() => {
       totalPrice: productResponse.data.price + 50
     });
   }
+  if(userid){
+
+  getCustomer();
+}
   getProduct();
-}, [])
-
-useEffect(() => {
-  // console.log(product);
-
-}, [product]);
-
- 
+  
+}, [userid])
 
   const handleClose=()=>{
     router.push('/product');
@@ -175,26 +192,27 @@ useEffect(() => {
 
               <Form.Group controlId="customerContact">
   <Form.Label>Customer Contact</Form.Label>
-  <Form.Control
-    type="number"
-    value={formData.customerContact}
-    maxLength={10}
-    onChange={(e) => {
-      const input = e.target.value;
-      // if (input.length <= 10 && (input[1]&&( input.startsWith("9") && (input[1] === "8" || input[1] === "7")))) 
-      if (
-        input.length <= 10 &&
-        input.startsWith("9") &&
-        (input.length < 2 || (input[1] === "8" || input[1] === "7"))
-      ) 
-      {
-        setFieldMsg('');
-        setFormData({ ...formData, customerContact: input });
-      }else if(input.length<=10){
-       setFieldMsg('Invalid contact number')
-      }
-    }}
-  />
+
+<Form.Control
+  type="number"
+  value={formData.customerContact}
+  maxLength={10}
+  onChange={(e) => {
+    const input = e.target.value;
+    // if (input.length <= 10 && (input[1]&&( input.startsWith("9") && (input[1] === "8" || input[1] === "7")))) 
+    if (
+      input.length <= 10 &&
+      input.startsWith("9") &&
+      (input.length < 2 || (input[1] === "8" || input[1] === "7"))
+    ) {
+      setFieldMsg('');
+      setFormData({ ...formData, customerContact: input });
+    } else if (input.length <= 10) {
+      setFieldMsg('Invalid contact number');
+    }
+  }}
+/>
+
 </Form.Group>
   <p style={{color:'red'}}>{fieldMsg}</p>
   {
@@ -253,24 +271,6 @@ useEffect(() => {
   )
 }
 
-export async function getServerSideProps({ query }) {
-   const userId=query.userid;
-   console.log('userId:')
-   console.log(userId)
-
-    const customerResponse = await axios.post(`${process.env.BACKEND_API}/user/customer`, {
-      customerId:userId
-    });
-  
-    return {
-      props: {
-        customer:customerResponse.data,
-        revalidate: 1
-      }
-    }
-  }
-  
-  
 
 export default SelectedProduct;
 
