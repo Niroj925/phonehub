@@ -22,9 +22,9 @@ function SelectedProduct() {
     // console.log(customer)  
   const [product, setProduct] = useState({});
   const [customer,setCustomer]=useState({});
-const [formData, setFormData] = useState({
-  customerContact: '',
-});
+  const [formData, setFormData] = useState({
+    customerContact:"",
+  });
 const [myOrder,setMyOrder]=useState(null);
 const [showMap,setShowMap]=useState(false);
 const [showPayment,setShowPayment]=useState(false);
@@ -36,62 +36,118 @@ const { userid } = router.query;
 
 console.log(`userid:${userid}`);
 
-useEffect(() => {
+// useEffect(() => {
 
-  const getCustomer=async ()=>{
+//   const getCustomer=async ()=>{
 
-    try{
-    const customerResponse = await axios.post(`${process.env.BACKEND_API}/user/customer`, {
-      customerId:userid
-    });
-    console.log(customerResponse);
-    setCustomer(customerResponse.data);
-  }catch(err){
-    console.log(err);
-  }
-  }
+//     try{
+//     const customerResponse = await axios.post(`${process.env.BACKEND_API}/user/customer`, {
+//       customerId:userid
+//     });
+//     console.log(customerResponse);
+//     setCustomer(customerResponse.data);
+//   }catch(err){
+//     console.log(err);
+//   }
+//   }
 
-   const getProduct =async()=> {
-    const productId = JSON.parse(localStorage.getItem('slectedproductid'));
-    console.log("productid:", productId);
-    const productResponse = await api.post(`product/getproductbyid`, {
-      productId: productId
-    });
+//    const getProduct =async()=> {
+//     const productId = JSON.parse(localStorage.getItem('slectedproductid'));
+//     console.log("productid:", productId);
+//     const productResponse = await api.post(`product/getproductbyid`, {
+//       productId: productId
+//     });
 
-    setProduct(productResponse.data);
-     console.log(productResponse.data);
-    setFormData({
-      user: productResponse.data.user,
-      customerId: userid,
-      customerEmail: customer.email,
-      customerName: customer.name,
-      customerContact: '',
-      orderItems: {
-        product: productResponse.data._id,
-        quantity: '1',
-        price: productResponse.data.price
-      },
-      shippingAddress: {
-        address: 'ktm',
-        location: {
-          lat: 27.11,
-          lon: 85.66
-        },
-      },
-      paymentMethod: 'Cash on Delivery',
-      itemsPrice: productResponse.data.price,
-      taxPrice: 0,
-      shippingPrice: 50,
-      totalPrice: productResponse.data.price + 50
-    });
-  }
-  if(userid){
+//     setProduct(productResponse.data);
+//      console.log(productResponse.data);
+//     setFormData({
+//       user: productResponse.data.user,
+//       customerId: userid,
+//       customerEmail: customer.email,
+//       customerName: customer.name,
+//       customerContact: '',
+//       orderItems: {
+//         product: productResponse.data._id,
+//         quantity: '1',
+//         price: productResponse.data.price
+//       },
+//       shippingAddress: {
+//         address: 'ktm',
+//         location: {
+//           lat: 27.11,
+//           lon: 85.66
+//         },
+//       },
+//       paymentMethod: 'Cash on Delivery',
+//       itemsPrice: productResponse.data.price,
+//       taxPrice: 0,
+//       shippingPrice: 50,
+//       totalPrice: productResponse.data.price + 50
+//     });
+//   }
+//   if(userid){
 
-  getCustomer();
-}
-  getProduct();
+//   getCustomer();
+// }
+//   getProduct();
   
-}, [userid])
+// }, [userid])
+
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const customerResponse = await axios.post(`${process.env.BACKEND_API}/user/customer`, {
+        customerId: userid
+      });
+      console.log(customerResponse);
+      setCustomer(customerResponse.data);
+
+      const productId = JSON.parse(localStorage.getItem('slectedproductid'));
+      console.log("productid:", productId);
+      const productResponse = await api.post(`product/getproductbyid`, {
+        productId: productId
+      });
+
+      setProduct(productResponse.data);
+      console.log(productResponse.data);
+      setFormData({
+        user: productResponse.data.user,
+        customerId: userid,
+        customerEmail: customerResponse.data.email,
+        customerName: customerResponse.data.name,
+        customerContact: '',
+        orderItems: {
+          product: productResponse.data._id,
+          quantity: '1',
+          price: productResponse.data.price
+        },
+        shippingAddress: {
+          address: 'ktm',
+          location: {
+            lat: 27.11,
+            lon: 85.66
+          },
+        },
+        paymentMethod: 'Cash on Delivery',
+        itemsPrice: productResponse.data.price,
+        taxPrice: 0,
+        shippingPrice: 50,
+        totalPrice: productResponse.data.price + 50
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (userid) {
+    fetchData();
+  }
+}, [userid]);
+
+
+
+
 
   const handleClose=()=>{
     router.push('/product');
@@ -142,7 +198,8 @@ useEffect(() => {
           // console.log(response.data);
           // setMyOrder(response.data);
           if(response.data){
-            // console.log(response.data);
+            console.log('order detail')
+            console.log(response.data);
           setMyOrder(response.data);
 
             toast.success(`Thank You ${customer.name}, for Purchasing this item `, {
